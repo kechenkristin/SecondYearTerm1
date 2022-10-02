@@ -9,10 +9,12 @@ See more details in my OS notes.
 - java lambda
 see more details in 
 https://github.com/Matty-GCU/Note/blob/master/JavaSE/Java8%20Lambda表达式.2021.11.08.md
+
 https://mp.weixin.qq.com/s/QsKs7wriZH8f1jk__DbW4Q
 
 2. codes
 see the vedio : https://www.youtube.com/watch?v=eQk5AWcTS8w&t=33s
+
 and my github repo
 
 3. more info
