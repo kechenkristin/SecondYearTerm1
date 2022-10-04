@@ -18,4 +18,4 @@ see the vedio : https://www.youtube.com/watch?v=eQk5AWcTS8w&t=33s
 and my github repo
 
 3. more info
-see the note : https://www.youtube.com/watch?v=eQk5AWcTS8w&t=33s
+https://www.yuque.com/mo_ming/gl7b70/gw2xt5
