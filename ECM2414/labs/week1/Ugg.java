@@ -41,8 +41,8 @@ public class Ugg {
     // nested uggRock class
     static class UggRock {
         // fields
-        UggRockType type;
-        UggRockSize size;
+        private UggRockType type;
+        private UggRockSize size;
 
         public UggRockType getType() {
             return type;
@@ -70,30 +70,33 @@ public class Ugg {
 
     public UggRock drawRock() {
         Random r1 = new Random();
-        int randomNum = r1.nextInt(6);
-        int size;
-        if (randomNum < 3) {
-            size = 1;
-        } else if (randomNum < 5) {
-            size = 3;
+        double randomSize = r1.nextDouble();
+        UggRockSize size;
+        if (randomSize < 6.0 / 9.0) {
+            size = UggRockSize.NOTSOBIGUN;
+        } else if (randomSize < 8.0 / 9.0) {
+            size = UggRockSize.QUITBIGUN;
         } else {
-            size = 5;
+            size = UggRockSize.BIGUN;
         }
 
         Random r2 = new Random();
-        int type;
-        double rNum = r2.nextInt();
-        if (rNum < 0.25) {
-            type = 7;
-        } else if (rNum < 0.5) {
-            type = 20;
-        } else if (rNum < 0.75) {
-            type = 15;
+        double randomType = r2.nextDouble();
+        UggRockType type;
+        if (randomType < 0.25) {
+            type = UggRockType.SPECKLY;
+        } else if (randomType < 0.5) {
+            type = UggRockType.OUCHYBLACK;
+        } else if (randomType < 0.75) {
+            type = UggRockType.FLOATY;
         } else {
-            type = 2;
+            type = UggRockType.HOTHOTHOT;
         }
 
-        UggRock ret = new UggRock(7, 1);
-        return ret;
+        return new UggRock(type, size);
+    }
+
+    public static void main(String[] args) {
+        System.out.println("hello");
     }
 }
