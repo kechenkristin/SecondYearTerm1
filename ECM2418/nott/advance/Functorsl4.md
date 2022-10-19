@@ -62,6 +62,7 @@ instance Functor Maybe where
 ```
 - ghci demo examples
 
+```
 > fmap (+1) Nothing 
 Noting
 
@@ -70,7 +71,55 @@ Just 6
 
 > fmap not (Just False)
 Just True
+```
 
 3. Binary Tree
+- tree data def
+```haskell
+data Tree a = Leaf a | Node (Tree a) (Tree a)
+
+t :: Tree Int
+t = Node (Leaf 1) (Leaf 2)
+```
+
+- make tree an instance of Functor
+```haskell
+instance Functor Tree where
+ __ fmap :: (a -> b) -> Tree a -> Tree b
+ fmap g (Leaf x) = Leaf (g x)
+ fmap g (Node l r) = Node (fmap g l) (fmap g r)
+```
+
+- ghci demo examples
+```
+> fmap length (Leaf "abc")
+Leaf 3
+
+> fmap even (Node (Leaf 1) (Leaf 2))
+Node (Leaf False) (Leaf True)
+```
+
+### Why Use Functors?
+1. We can use same name, fmap, for functions that essentially are same.
+
+2. We can define generic functions that work for any functorial type.
+eg:
+```haskell
+inc :: [Int] -> [Int]
+
+inc :: Functor f => f Int -> f Int
+inc = fmap (+1)
+```
+f : any parametralise type that is an instance of functor class
+
+```
+> inc [1, 2, 3]
+[2, 3, 4]
+
+> inc (Just 1)
+Just 2
+
+> inc (Node (Leaf 1) (Leaf 2))
+Node (Leaf 2) (Leaf 3)
 
 
