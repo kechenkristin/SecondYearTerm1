@@ -1,4 +1,4 @@
-### pure & impure
+### Pure & Impure
 - pure = programs are mathematical functions
 
 - impure = programs have side effects
@@ -31,19 +31,20 @@ sqr = map (^2)
 - manards are example of abstracting common pattern
 
 ### Gereralising Futher
+functor: Generalising the idea of mapping to a larger family data strctures
 ```haskell
 class Functor f where
  fmap :: (a -> b) -> fa -> fb
 ```
-f : parametralise type
+f : parametralise type, then it is a member of Functor class, providied that it has a function called fmap.
 
 ### Examples of Functors
 
 1. The list functor
 ```haskell
 instance Functor [] where
-__ fmap :: (a -> b) -> [a] -> [b]
-fmap = map
+ _ _ fmap :: (a -> b) -> [a] -> [b]
+ fmap = map
 ```
 [] : parametralise type of list
 
@@ -56,7 +57,7 @@ data Maybe a = Nothing | Just a
 - make Maybe an instance of Functor
 ```haskell
 instance Functor Maybe where
- __ fmap :: (a -> b) -> Maybe a -> Maybe b
+ _ _ fmap :: (a -> b) -> Maybe a -> Maybe b
  fmap g Nothing = Nothing
  fmap g (Just x) = Just (g x)
 ```
@@ -85,7 +86,7 @@ t = Node (Leaf 1) (Leaf 2)
 - make tree an instance of Functor
 ```haskell
 instance Functor Tree where
- __ fmap :: (a -> b) -> Tree a -> Tree b
+ _ _ fmap :: (a -> b) -> Tree a -> Tree b
  fmap g (Leaf x) = Leaf (g x)
  fmap g (Node l r) = Node (fmap g l) (fmap g r)
 ```
@@ -106,7 +107,9 @@ Node (Leaf False) (Leaf True)
 eg:
 ```haskell
 inc :: [Int] -> [Int]
+```
 
+```haskell
 inc :: Functor f => f Int -> f Int
 inc = fmap (+1)
 ```
@@ -121,5 +124,6 @@ Just 2
 
 > inc (Node (Leaf 1) (Leaf 2))
 Node (Leaf 2) (Leaf 3)
+```
 
 
