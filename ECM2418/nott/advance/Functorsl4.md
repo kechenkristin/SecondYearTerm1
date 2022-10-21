@@ -104,6 +104,20 @@ Node (Leaf False) (Leaf True)
 1. We can use same name, fmap, for functions that essentially are same.
 
 2. We can define generic functions that work for any functorial type.
+```haskell
+map :: (a -> b) -> [a] -> [b]
+map g [] = []
+map g (x : xs) = g x : map g xs
+```
+
+```hakell
+class Functor f where
+ fmap :: (a -> b) -> f a -> f b
+```
+fmap: gerneralisation to other data type
+f could be list, tree etc
+map is not specific to list data type
+
 eg:
 ```haskell
 inc :: [Int] -> [Int]
