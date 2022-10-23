@@ -1,7 +1,7 @@
 ## Monads1
 
 ### Recap
-#### Functor
+1. Functor
 ```haskell
 class Functor f where
  fmap :: (a -> b) -> f a -> f b
@@ -13,9 +13,9 @@ Just 2
 > fmap (+1) Nothing
 ```
 
-#### Applicative Functor
+2. Applicative Functor
 ```haskell
-class Applicative where
+class Functor f => Applicative f where
  pure :: a -> f a
  (<*>) :: f (a -> b) -> f a -> f b
 ```
@@ -28,7 +28,7 @@ Nothing
 ```
 
 ### Example: s simple evaluator
-#### Strawman Idea
+1. Strawman Idea
 ```haskell
 data Expr = Val Int | Div Expr Expr
 eval :: Expr -> Int
@@ -37,15 +37,15 @@ eval (Div x y) = div (eval x) (eval y)
 ```
 problem: if eval y equals to 0, the program will crash.
 
-#### Apporach
-1. A safe version of division function
+2. Apporach
+(1). A safe version of division function
 ```haskell
 safediv :: Int -> Int -> Maybe Int
 safediv _ 0 = Nothing
 safediv n m = Just (div n m)
 ```
 
-2. 
+(2). 
 ```haskell
 eval :: Expr -> Maybe Int
 eval (Val n) = Just n
@@ -57,7 +57,7 @@ eval (Div x y) = case eval x of
 ```
 Problem: too complex for a small program.
 
-3. 
+(3).
 ```haskell
 eval :: Expr -> Maybe Int
 eval (Val n) = pure n
@@ -70,7 +70,7 @@ pure safediv : need Int -> Int -> Int
 but we have Int -> Int -> Maybe Int
 
 ### Binding Operator : (>>=)
-#### Absorb a common pattern
+1. Absorb a common pattern
 ```haskell
 mx >>= f = case mx of 
             Nothing -> Nothing
@@ -82,14 +82,14 @@ type (>>=)
 (>>=) :: Maybe a -> (a -> Maybe b) -> Maybe b
 ```
 
-#### Simplify the def of eval
+2. Simplify the def of eval
 ```haskell
 eval :: Expr -> Maybe Int
 eval (Val n) = Just n
 eval (Div x y) = eval x >>= (\n -> eval y >>= (\m -> safediv n m))
 ```
 
-#### General Pattern
+3. General Pattern
 ```haskell
 m1 >>= \x1 -> 
 m2 >>= \m2 ->
@@ -117,5 +117,7 @@ eval (Div x y) = do n <- eval x
 ```
 
 3. benefit
+
 (1). Simple, and if both of eval x, eval y success, we call safediv, we don't need to worry the failure, because it is handled by the bindingoperationand do notation.
+
 (2). Procedural style like C, but a pure functional programming.
