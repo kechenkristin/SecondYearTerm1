@@ -62,7 +62,9 @@ instance Monad [] where
           = [y | x <- xs, y <- f x]
 ```
 xs : [a]
+
 f : a -> [b]
+
 map f xs : [[b]]
 
 (2). eg
@@ -84,6 +86,7 @@ pairs xs ys = [(x, y) | x <- xs, y <- ys]
 ps. do notation is not specific to list, but any monad, the list comprehension only works for list.
 
 3. State (Important)
+
 (1). What is State?
 ```haskell
 type State = ...
@@ -115,6 +118,8 @@ Char -> State -> (Int, State)
 
 ```haskell
 newtype ST a = S (State -> (a, State))
+
+app :: ST a -> State -> (a, State)
 app (S st) s = st s
 ```
 
@@ -128,8 +133,11 @@ instance Monad ST where
 ```
 
 x : a
+
 s : State
+
 ? : a
+
 ? : State
 
 ```haskell
@@ -163,4 +171,5 @@ st >>= f = S(\s -> let(x, s`) = app st s in app(f x) s`)
 
 
 st : ST a
+
 f : a -> ST b
