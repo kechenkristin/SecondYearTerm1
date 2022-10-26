@@ -125,7 +125,7 @@ app (S st) s = st s
 
 (3). make ST in to an instance of Monad type
 
-
+- define the return operator
 ```haskell
 instance Monad ST where
  _ _ return :: a -> ST a
@@ -154,7 +154,7 @@ instance Monad ST where
 ----> S|______|----> S    
 ```
 
-define bind operator
+- define bind operator
 ```haskell
 _ _(>>=) :: ST a -> (a -> ST b) -> ST b
 st >>= f = S(\s -> let(x, s`) = app st s in app(f x) s`)

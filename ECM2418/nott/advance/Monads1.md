@@ -64,9 +64,13 @@ eval (Val n) = pure n
 eval (Div x y) = pure safediv <*> eval x <*> eval y
 ```
 type error
+
 eval x : Maybe Int
+
 eval y : Maybe Int
+
 pure safediv : need Int -> Int -> Int
+
 but we have Int -> Int -> Maybe Int
 
 ### Binding Operator : (>>=)
@@ -77,19 +81,19 @@ mx >>= f = case mx of
             Just x -> f x
 ```
 
-type (>>=)
+2. type (>>=)
 ```haskell
 (>>=) :: Maybe a -> (a -> Maybe b) -> Maybe b
 ```
 
-2. Simplify the def of eval
+3. Simplify the def of eval
 ```haskell
 eval :: Expr -> Maybe Int
 eval (Val n) = Just n
 eval (Div x y) = eval x >>= (\n -> eval y >>= (\m -> safediv n m))
 ```
 
-3. General Pattern
+4. General Pattern
 ```haskell
 m1 >>= \x1 -> 
 m2 >>= \m2 ->
