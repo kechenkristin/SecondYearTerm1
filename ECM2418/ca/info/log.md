@@ -102,4 +102,25 @@ isAcceptable (ls, rs) = (isPalindrome ps) && (ps !! 0 == 4) && smallThree (rever
   ndps = cutHalf ps
 ```
 
+#### 10.27 update
+##### now work correctly
+```haskell
+isThree :: [Int] -> [Int] -> Bool
+isThree xs ys
+ | (length xs) < (length ys) = xs !! (length xs -1) == 3
+ | otherwise = ys !! (length ys -1) == 3
 
+isAcceptable (ls, rs) = (isPalindrome ps) && (ps !! 0 == 4) && isThree ls rs
+ where
+  p = (number ls) * (number rs)
+  ps = digits p
+```
+
+> reply form david
+As to your second question, you muliply two numbers to get a product : m * n = p. 
+The smallest number is the smallest of m an n.
+
+```
+*Main> acceptables 
+[([1,4,5,3],[2,9,6,7,8]),([7,1,6,3],[5,9,2,4,8]),([2,3],[1,7,6,9,5,4,8]),([1,7,6,9,5,4,8],[2,3]),([5,9,2,4,8],[7,1,6,3]),([2,9,6,7,8],[1,4,5,3])]
+```

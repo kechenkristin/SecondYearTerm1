@@ -30,22 +30,23 @@ cutHalf xs
  | ((mod (length xs) 2) == 1) = take (div (length xs + 1) 2) xs
  | otherwise = take (div (length xs) 2) xs
 
-findSmall :: [Int] -> Int
-findSmall [] = -999
-findSmall [x] = x
-findSmall (x : y : ys)
- | x < y = x
- | otherwise = findSmall (y : ys)
+
+isThree :: [Int] -> [Int] -> Bool
+isThree xs ys
+ | (length xs) < (length ys) = xs !! (length xs -1) == 3
+ | otherwise = ys !! (length ys -1) == 3
+
 
 isAcceptable :: ([Int],[Int]) -> Bool
 isAcceptable ([], []) = False
 -- isAcceptable (ls, rs) = (isPalindrome ps) && (ps !! 0 == 4) && ((ndps !! (length ndps - 1) == 3) || (ndps !! (length ndps - 2) == 3)) 
 -- isAcceptable (ls, rs) = (isPalindrome ps) && (ps !! 0 == 4) && smallThree (reverse ndps)
-isAcceptable (ls, rs) = (isPalindrome ps) && (ps !! 0 == 4) && findSmall(reverse ndps) == 3
+-- isAcceptable (ls, rs) = (isPalindrome ps) && (ps !! 0 == 4) && findSmall(reverse ndps) == 3
+
+isAcceptable (ls, rs) = (isPalindrome ps) && (ps !! 0 == 4) && isThree ls rs
  where 
   p = (number ls) * (number rs)
   ps = digits p
-  ndps = cutHalf ps
 
 acceptables :: [([Int],[Int])]
 acceptables = filter isAcceptable possibles
