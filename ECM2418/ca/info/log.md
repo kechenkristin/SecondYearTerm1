@@ -12,6 +12,8 @@ acceptables: [([5,2,1,3,4,7,6],[8,9]),([7,9,4],[5,2,6,8,3,1]),([7,1,6,3],[5,9,2,
 #### version2(seems to be correct)
 ##### Q1 when compiling, the speed is pretty slow, do we need to use any techniques to speed up?
 
+##### Q1 ps duplicate
+
 ##### Q2 question: what does the last digit of the smallest number mean?
 result from using relatively smaller
 [([5,2,1,3,4,7,6],[8,9]),([7,1,6,3],[5,9,2,4,8]),([5,9,2,4,8],[7,1,6,3]),([8,9],[5,2,1,3,4,7,6])]
@@ -40,6 +42,9 @@ result from using relatively smaller
 3
 
 ```
+
+##### Q3 main method?
+
 
 ```haskell
 digits :: Int -> [Int]
