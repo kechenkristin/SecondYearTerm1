@@ -32,6 +32,8 @@ cutHalf xs
 
 
 isThree :: [Int] -> [Int] -> Bool
+isThree _ [] = False
+isThree [] _ = False
 isThree xs ys
  | (length xs) < (length ys) = xs !! (length xs -1) == 3
  | otherwise = ys !! (length ys -1) == 3
