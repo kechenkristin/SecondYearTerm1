@@ -2,7 +2,7 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 
 /**
  * The CardDeck for the card game, a deck is a set of card where player can draw or discard card.
- *
+ * <p>
  * each deck has unique id
  * each deck has number of cards
  */
@@ -15,7 +15,10 @@ public class CardDeck {
      */
     private Integer deckId;
 
-
+    /**
+     * deck file handler
+     */
+    private DeckFileHandler deckFileHandler;
 
 
     /**
@@ -31,9 +34,9 @@ public class CardDeck {
     }
 
 
-
     public CardDeck(Integer deckId) {
         this.deckId = deckId;
+        this.cards = new ConcurrentLinkedDeque<>();
     }
 
     // getters and setters
@@ -50,5 +53,23 @@ public class CardDeck {
 
     public void setDeckId(Integer deckId) {
         this.deckId = deckId;
+    }
+
+    /**
+     * get a String of the cards the deck holds
+     *
+     * @return
+     */
+    private String getDeckCardsString() {
+        StringBuilder sb = new StringBuilder();
+        for (Card c : cards) {
+            sb.append(c.getVal());
+            sb.append(" ");
+        }
+        return sb.toString();
+    }
+
+    public void generateDeckString() {
+        deckFileHandler.write("deck" + deckId + " contents: " + getDeckCardsString());
     }
 }

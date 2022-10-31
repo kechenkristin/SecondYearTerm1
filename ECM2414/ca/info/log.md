@@ -53,3 +53,22 @@ Heegon Kechen
 2. log
 3. design doc
 4. test design doc
+
+### 10.30
+Heegon Kechen
+14:00 - 16:00
+### Done
+1. review codes
+2. test discard
+- made changes based on test
+3. make out put functionality
+4. made Player class to be nested class
+- made changes to Players
+5. start on multithreading
+
+### TODO
+1. figure out multithreading stuffs
+2. work on report part
+3. make changes on testPlayer(now a nested class
+4. make more test cases
+5. looking through all codes to improve further
