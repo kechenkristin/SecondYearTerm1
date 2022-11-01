@@ -2,6 +2,7 @@
 
 ### Using VM
 > ssh -p 56300 lh@ml-lab-ea7983db-576e-4a96-b9dd-c35e52f8ed40.uksouth.cloudapp.azure.com
+
 user: lh
 
 password: Initial1
@@ -9,6 +10,7 @@ password: Initial1
 ### E1
 #### E.1.1
 - question
+
 List all users with their login that have numerical user id larger than 1000.
 Submit your answer in cell B2 of the spreadsheet ecm2426.ods. Separate the
 logins with a comma, e.g., “joe, jane, root”.
@@ -16,8 +18,10 @@ logins with a comma, e.g., “joe, jane, root”.
 > cat /etc/passwd
 
 - record
+
 ```
 lh@ML-RefVm-741459:~/solution$ cat /etc/passwd
+
 root:x:0:0:root:/root:/bin/bash
 daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
 bin:x:2:2:bin:/bin:/usr/sbin/nologin
@@ -68,6 +72,7 @@ eve:x:1004:1006:Eve,,,:/home/eve:/bin/bash
 systemd-timesync:x:996:999:systemd Time Synchronization:/:/usr/sbin/nologin
 ```
 - solution
+
 alice, bob, charlie, eve
 
 
@@ -78,15 +83,18 @@ alice, bob, charlie, eve
 > cat /etc/shadow | grep bob 
 
 - res
-https://blog.csdn.net/lws123253/article/details/89228589
 
-https://3gstudent.github.io/Linux%E4%B8%8B%E7%9A%84%E5%AF%86%E7%A0%81Hash-%E5%8A%A0%E5%AF%86%E6%96%B9%E5%BC%8F%E4%B8%8E%E7%A0%B4%E8%A7%A3%E6%96%B9%E6%B3%95%E7%9A%84%E6%8A%80%E6%9C%AF%E6%95%B4%E7%90%86
+	- https://blog.csdn.net/lws123253/article/details/89228589
 
-https://unix.stackexchange.com/questions/430141/how-to-find-the-hashing-algorithm-used-to-hash-passwords
+	- https://3gstudent.github.io/Linux%E4%B8%8B%E7%9A%84%E5%AF%86%E7%A0%81Hash-%E5%8A%A0%E5%AF%86%E6%96%B9%E5%BC%8F%E4%B8%8E%E7%A0%B4%E8%A7%A3%E6%96%B9%E6%B3%95%E7%9A%84%E6%8A%80%E6%9C%AF%E6%95%B4%E7%90%86
+
+	- https://unix.stackexchange.com/questions/430141/how-to-find-the-hashing-algorithm-used-to-hash-passwords
 
 - question
+
 Execute a guessing attack on the password for the user bob. What is the
 password of bob.
+
 Submit your answer in cell B3 of the spreadsheet ecm2426.ods.
 
 - record
@@ -99,25 +107,30 @@ Submit your answer in cell B3 of the spreadsheet ecm2426.ods.
 > cat /exercise1/flag
 
 - question
+
 What is the content of the file /home/alice/exercise1/flag.
 Submit your answer in cell B4 of the spreadsheet ecm2426.ods
 
 - record
+
 ```
 lh@ML-RefVm-741459:~/solution$ su - alice
 Password: 
+
 alice@ML-RefVm-741459:~$ ls
 exercise01  exercise02
+
 alice@ML-RefVm-741459:~$ cd exercise01
-alice@ML-RefVm-741459:~/exercise01$ ls
-flag
+
 alice@ML-RefVm-741459:~/exercise01$ ls -l
 total 4
 -rwxr-----+ 1 alice alice 76 Nov  1 19:10 flag
+
 alice@ML-RefVm-741459:~/exercise01$ cat flag 
 10.0.0.29 :5329ccb5a3ac7f8cfa6456d8abe097e123a060f86a7cf31ef71a9dc503fcb1ef
 ```
 - solution
+
 10.0.0.29 :5329ccb5a3ac7f8cfa6456d8abe097e123a060f86a7cf31ef71a9dc503fcb1ef
 
 #### E.1.4
@@ -126,22 +139,27 @@ alice@ML-RefVm-741459:~/exercise01$ cat flag
 > getent group groupname
 
 - question
-List all users with their login that can read the file /home/alice/exercise1/flag
-. Separate the logins with a comma, e.g., “joe, jane, root''.
+
+List all users with their login that can read the file /home/alice/exercise1/flag. Separate the logins with a comma, e.g., “joe, jane, root''.
 Submit your answer in cell B5 of the spreadsheet ecm2426.ods.
 
 - record
+
 ```
 alice@ML-RefVm-741459:~/exercise01$ ls -l
 total 4
 -rwxr-----+ 1 alice alice 76 Nov  1 19:10 flag
+
 alice@ML-RefVm-741459:~/exercise01$ getent group alice
 alice:x:1003:
+
 alice@ML-RefVm-741459:~/exercise01$ groups
 alice student
+
 alice@ML-RefVm-741459:~/exercise01$ getent group student 
 student:x:1002:alice,bob,charlie,eve
 ```
 
 - solution
+
 alice
