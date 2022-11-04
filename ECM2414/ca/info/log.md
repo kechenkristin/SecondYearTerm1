@@ -72,3 +72,23 @@ Heegon Kechen
 3. make changes on testPlayer(now a nested class
 4. make more test cases
 5. looking through all codes to improve further
+
+### 11.02
+Heegon Kechen
+12 : 17: 07
+### Done
+1. modified test
+- provide robust playertest to check player class's functionality
+- test some method of CardGame class
+- test if output files are created
+
+2. tried different methods for synchronised
+
+3. create the output file for deck
+
+### TODO
+1. synchronised
+2. output file format(when someone win)
+3. remove redundant codes
+4. write design report
+5. test suite

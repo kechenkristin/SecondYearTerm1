@@ -133,9 +133,10 @@ alice@ML-RefVm-741459:~/exercise01$ cat flag
 
 10.0.0.29 :5329ccb5a3ac7f8cfa6456d8abe097e123a060f86a7cf31ef71a9dc503fcb1ef
 
-#### E.1.4
+#### E.1.4 (not sure)
 - pre
 > ls -l 
+
 > getent group groupname
 
 - question

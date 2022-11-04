@@ -28,30 +28,27 @@ public class CardGame {
         private Integer id;
         private boolean win;
 
-        private PlayerFileHandler playerFileHandler;
+        private final PlayerFileHandler playerFileHandler;
 
 
         /**
          * Each player will hold a hand of 4 cards
          */
-        ConcurrentLinkedDeque<Card> cards;
+        // todo update to be private
+        volatile ConcurrentLinkedDeque<Card> cards;
 
         // constructor
 
-        public Player(Integer id, ConcurrentLinkedDeque<Card> cards) {
-            this.id = id;
-            this.cards = cards;
-            win = false;
-            playerFileHandler = new PlayerFileHandler(id);
-        }
-
-
+        /**
+         * Create a player with Id
+         */
         public Player(Integer id) {
             this.id = id;
-            this.cards = new ConcurrentLinkedDeque<>();
             win = false;
+            cards = new ConcurrentLinkedDeque<>();
             playerFileHandler = new PlayerFileHandler(id);
         }
+
 
         // getters and setters
         public void setId(Integer id) {
@@ -65,6 +62,10 @@ public class CardGame {
 
         public ConcurrentLinkedDeque<Card> getCards() {
             return cards;
+        }
+
+        public void setCards(ConcurrentLinkedDeque<Card> cards) {
+            this.cards = cards;
         }
 
         /**
@@ -95,7 +96,7 @@ public class CardGame {
         /**
          * check the player wins or not
          */
-        public boolean checkWin() {
+        public synchronized boolean checkWin() {
             return checkCardValEqual(convertCardstoInteger());
         }
 
@@ -132,17 +133,16 @@ public class CardGame {
          */
         // todo: where to sychronised
         // todo: test whether the decks List CardGame has modified
-        public void drawCard() throws NoCardsException, EmptyDecksException {
-            if (!checkWin()) {
-                if (decks.isEmpty())
-                    throw new EmptyDecksException("The Decks should not be empty, there is no decks for the card game!");
-                // which deck the player should draw, p1 -> 1, p2 -> 2 etc
-                Card drawCard = drawCardFromDeck(decks.get(id - 1));
-                // todo : the order of player's hand cards
-                cards.addLast(drawCard);
-                assert drawCard != null;
-                generateDrawString(id, drawCard.getVal());
+        public synchronized void drawCard() throws NoCardsException, EmptyDecksException {
+            if (decks.isEmpty()) {
+                throw new EmptyDecksException("The Decks should not be empty, there is no decks for the card game!");
             }
+            // which deck the player should draw, p1 -> 1, p2 -> 2 etc
+            Card drawCard = drawCardFromDeck(decks.get(id - 1));
+            // todo : the order of player's hand cards
+            cards.addLast(drawCard);
+            assert drawCard != null;
+            generateDrawString(id, drawCard.getVal());
         }
 
         /**
@@ -172,12 +172,10 @@ public class CardGame {
          */
         // todo : update to be private
         Card findNonPreferCard() {
-            if (!win) {
-                for (Card card : cards) {
-                    if (!card.getVal().equals(id)) {
-                        cards.remove(card);
-                        return card;
-                    }
+            for (Card card : cards) {
+                if (!card.getVal().equals(id)) {
+                    cards.remove(card);
+                    return card;
                 }
             }
             return null;
@@ -197,16 +195,20 @@ public class CardGame {
          * A player discard a card form the top of the deck to their right.
          */
         // todo: where to sychronised
-        public void discardCard() throws NoCardsException, WrongNumberCardsInHandException {
-            if (!checkWin()) {
-                if (cards.size() == 0) throw new NoCardsException("The player has no cards in hand to discard!");
-                if (cards.size() != 5)
-                    throw new WrongNumberCardsInHandException("The player has wrong number of cards in hand!");
-                int discardDeckId = discardDeckId(numOfPlayers);
-                Card cardToDiscard = findNonPreferCard();
-                discardCardFromDeck(cardToDiscard, decks.get(discardDeckId - 1));
-                generateDrawString(discardDeckId, cardToDiscard.getVal());
+        public synchronized void discardCard() throws NoCardsException, WrongNumberCardsInHandException {
+            if (cards.size() == 0) throw new NoCardsException("The player has no cards in hand to discard!");
+            if (cards.size() != 5)
+                throw new WrongNumberCardsInHandException("The player has wrong number of cards in hand!");
+            int discardDeckId = discardDeckId(numOfPlayers);
+            Card cardToDiscard = findNonPreferCard();
+
+            // in case never happen in real world, but still handle it.
+            if (cardToDiscard == null) {
+                win = true;
+                return;
             }
+            discardCardFromDeck(cardToDiscard, decks.get(discardDeckId - 1));
+            generateDiscardString(discardDeckId, cardToDiscard.getVal());
         }
 
         /**
@@ -226,7 +228,6 @@ public class CardGame {
          * eg. player1 initial hand 1 1 2 3
          */
         public void initHand() {
-
             playerFileHandler.write("player " + id + " initial hand " + getHandCardsString());
         }
 
@@ -246,8 +247,8 @@ public class CardGame {
          * @param winnerId
          */
         private void generateWinString(int winnerId) {
-            if (win) {
-                playerFileHandler.write("player " + id + " wins");
+            if (someWin) {
+                playerFileHandler.write("player " + winnerId + " wins");
             } else {
                 playerFileHandler.write("player " + winnerId + " has informed player " + id + " that player " + winnerId + " has won");
             }
@@ -266,19 +267,19 @@ public class CardGame {
             generateEndString();
         }
 
-        public void notifyOthers() {
-            synchronized (lock) {
-                if (win) {
-                    notifyAll();
-                }
-            }
-        }
-
 
         @Override
         public void run() {
-            synchronized (lock) {
-                while (!win) {
+            // todo syn
+
+            while (!someWin) {
+                if (checkWin()) {
+                    someWin = true;
+                    lastLines(this.id);
+                    deckOutput();
+                    System.out.println("Player " + id + " wins the game");
+                    // return;
+                } else {
                     try {
                         drawCard();
                     } catch (NoCardsException | EmptyDecksException e) {
@@ -290,14 +291,7 @@ public class CardGame {
                         throw new RuntimeException(e);
                     }
                     currentHand();
-
-                    try {
-                        wait();
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
                 }
-
             }
         }
     }
@@ -324,17 +318,22 @@ public class CardGame {
     /**
      * All the players in the CardGame
      */
-    private List<Player> players;
+    private volatile List<Player> players;
 
     /**
      * All the decks in the CardGame;
      */
-    private List<CardDeck> decks;
+    private volatile List<CardDeck> decks;
+
+    /**
+     * Game end flag, if someone has won the game
+     */
+    private volatile boolean someWin = false;
 
     /**
      * a lock for all players of the game
      */
-    final Object lock = new Object();
+    static final Object playLock = new Object();
 
     // constructors
     // default
@@ -344,16 +343,35 @@ public class CardGame {
         decks = new ArrayList<>();
     }
 
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public int getNumOfPlayers() {
+        return numOfPlayers;
+    }
+
+    public void setNumOfPlayers(int numOfPlayers) {
+        this.numOfPlayers = numOfPlayers;
+    }
+
+    public void setPack(List<Card> pack) {
+        this.pack = pack;
+    }
+
+    public void setPackFileLocation(String packFileLocation) {
+        this.packFileLocation = packFileLocation;
+    }
+
+    public void setPlayers(List<Player> players) {
+        this.players = players;
+    }
+
+    public void setDecks(List<CardDeck> decks) {
+        this.decks = decks;
+    }
 
     // methods
-
-    /**
-     * Request via the command line the number of players in the game
-     */
-    public void getPlayerNum() {
-        System.out.println("Please enter the number of players:");
-        scanNum();
-    }
 
 
     /**
@@ -365,12 +383,13 @@ public class CardGame {
     }
 
     /**
-     * get the pack for the card game.
+     * Request via the command line the number of players in the game
      */
-    public void getPack() {
-        scanFileLocation();
-        readPackFile(packFileLocation);
+    public void getPlayerNum() {
+        System.out.println("Please enter the number of players:");
+        scanNum();
     }
+
 
     /**
      * scan the location of pack file form input in command line
@@ -428,11 +447,19 @@ public class CardGame {
         getPack();
     }
 
+    /**
+     * get the pack for the card game.
+     */
+    public void getPack() {
+        scanFileLocation();
+        readPackFile(packFileLocation);
+    }
+
 
     /**
      * Initialize players and decks for the CardGame
      */
-    public void initPlayersAndDecks() {
+    void initPlayersAndDecks() {
         for (int i = 1; i <= numOfPlayers; i++) {
             players.add(new Player(i));
             decks.add(new CardDeck(i));
@@ -442,20 +469,18 @@ public class CardGame {
     /**
      * deal cards for players in a rounnd robin fashion
      */
-    private void dealCardForPlayer() {
+    void dealCardForPlayer() {
         // copy the first part of the list to deal to the player
         for (int i = 0; i < numOfPlayers * 4; i++) {
             // todo : check it later
-            synchronized (pack) {
-                players.get((i % numOfPlayers) + 1).cards.add(pack.get(i));
-            }
+            players.get((i % numOfPlayers)).cards.add(pack.get(i));
         }
     }
 
     /**
      * generate init String for each player
      */
-    public void gernerateInitHand() {
+    void gernerateInitHand() {
         for (Player p : players) {
             p.initHand();
         }
@@ -464,12 +489,29 @@ public class CardGame {
     /**
      * deal cards for players in a rounnd robin fashion
      */
-    private void dealCardForDeck() {
+    void dealCardForDeck() {
         for (int i = numOfPlayers * 4; i < numOfPlayers * 8; i++) {
             // todo : check it later
-            synchronized (pack) {
-                decks.get((i % numOfPlayers) + 1).cards.add(pack.get(i));
-            }
+            decks.get((i % numOfPlayers)).cards.add(pack.get(i));
+        }
+    }
+
+    /**
+     * Start of the game.
+     * Encapsulate all the game logic of starting game inside one method.
+     */
+    public void startGame() {
+        getPlayerNum();
+        getPack();
+        initPlayersAndDecks();
+        dealCardForPlayer();
+        gernerateInitHand();
+        dealCardForDeck();
+    }
+
+    void deckOutput() {
+        for (CardDeck cardDeck : decks) {
+            cardDeck.generateDeckString();
         }
     }
 
@@ -477,11 +519,21 @@ public class CardGame {
      * check the exit logical of the game, if the win flag of one of the players is true, then the game end.
      */
     // todo: implement the win player should notify other player, and exit.
-    public void checkGameEnd() {
+    private boolean checkGameEnd() {
         for (Player player : players) {
-            if (player.checkWin()) {
-                System.out.println("Player" + player.getId() + "wins");
+            synchronized (playLock) {
+                if (player.checkWin()) {
+                    System.out.println("Player" + player.getId() + "wins");
+                    someWin = true;
+                    return someWin;
+                }
             }
+        }
+        return someWin;
+    }
+
+    public void informOthers() {
+        for (Player p : players) {
         }
     }
 
@@ -492,9 +544,14 @@ public class CardGame {
     // main method
     public static void main(String[] args) {
         CardGame cg = new CardGame();
-        // scan number of players
-        cg.getPlayerNum();
-        cg.getPack();
+        cg.startGame();
+        System.out.println("game start.");
+
+        for (int i = 0; i < cg.getNumOfPlayers(); i++) {
+            (new Thread(cg.getPlayers().get(i))).start();
+        }
+
+        System.out.println("debug");
 
         // todo : implement wait notify.
 

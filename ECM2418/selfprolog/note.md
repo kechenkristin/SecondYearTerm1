@@ -151,14 +151,17 @@ false.
 - =:= 	compare arithmetic result of both sides
 
 4. search strategy: DFS
+- dfs + backtrack
+- ! cut -> inhibite backtrack
+
+5. examples
 ```prolog
 % recursion
 % factorial: 0! = 1, 1!= 1,..., 5!=120
 % basic case
-% factorial(0, 1).
 factorial(0, 1):-!.
 factorial(Num, Fact):-
-    Num_next if Num - 1,
+    Num_next is Num - 1,
     factorial(Num_next, Fact_next),
     Fact is Num * Fact_next.
 ```

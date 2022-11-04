@@ -3,17 +3,14 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class DeckFileHandler extends FileHandler {
+public class DeckFileHandler {
     private File file;
 
-    public File getFile() {
-        return file;
-    }
 
     // constructor
     public DeckFileHandler(int deckId) {
         try {
-            File file = new File("deck" + deckId + "_output.txt");
+            file = new File("deck" + deckId + "_output.txt");
             (new BufferedWriter(new FileWriter(file.getAbsoluteFile()))).write("");
         } catch (IOException e) {
             System.out.println("Error");
@@ -22,6 +19,13 @@ public class DeckFileHandler extends FileHandler {
 
     // methods
     public void write(String msg) {
-        super.write(msg);
+        try {
+            FileWriter fw = new FileWriter(file.getAbsoluteFile(), true); //'true' is set to append on the file
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.append(msg);
+            bw.newLine();
+            bw.close();
+        } catch (IOException ignored) {
+        }
     }
 }

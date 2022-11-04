@@ -25,18 +25,14 @@ public class CardDeck {
      * the cards for each deck
      */
     // todo : makes it private
-    public ConcurrentLinkedDeque<Card> cards;
+    public volatile ConcurrentLinkedDeque<Card> cards;
+
 
     // constructors
-    public CardDeck(Integer deckId, ConcurrentLinkedDeque<Card> cards) {
-        this.deckId = deckId;
-        this.cards = cards;
-    }
-
-
     public CardDeck(Integer deckId) {
         this.deckId = deckId;
         this.cards = new ConcurrentLinkedDeque<>();
+        this.deckFileHandler = new DeckFileHandler(deckId);
     }
 
     // getters and setters
@@ -46,13 +42,16 @@ public class CardDeck {
         return deckId;
     }
 
+    public void setDeckId(Integer deckId) {
+        this.deckId = deckId;
+    }
+
     public ConcurrentLinkedDeque<Card> getCards() {
         return cards;
     }
 
-
-    public void setDeckId(Integer deckId) {
-        this.deckId = deckId;
+    public void setCards(ConcurrentLinkedDeque<Card> cards) {
+        this.cards = cards;
     }
 
     /**
