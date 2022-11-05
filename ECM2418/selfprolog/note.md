@@ -45,14 +45,11 @@ side note: /2 means two arguments.
 X is min(1, 2)/2, X is abs(1)/1
 
 ### Fact: predicate / relation without variable
-			```prolog
 			parent(tina, william)
 			male(steve)
-			```
 
 ### Rule: 
 1. innerquery (logical combination) 
-			```prolog
 			mother(X, Y):-
 			parent(X, Y),
 			female(X).
@@ -85,12 +82,10 @@ X is min(1, 2)/2, X is abs(1)/1
 									parent(X, PY),
 									parent(PY, Y).
 
-									```
 
 2. recursion(call itself)
-	- basic case / backtrack case / stop option
-	- recursive part
-	```prolog
+- basic case / backtrack case / stop option
+- recursive part
 	ancestor(X, Y):-
 		parent(X, Y).
 
@@ -104,33 +99,25 @@ X is min(1, 2)/2, X is abs(1)/1
 				descendant(X, Y):-
 					parent(Y, Z),
 					descendant(Z, X).
-					```
 
 ### Query: (database / knowledge base)
-					1. unification rule (if binary terms are unified "="
+1. unification rule (if binary terms are unified "="
 #### simple term
-							- for constant and variable, if them are identical
-							```prolog
+- for constant and variable, if them are identical
 							?- a = a
 							true.
 							?- a = b
 							false.
-							```
-							- for variable
-							- if only one of them is variable: variable can be substituted by constant
-							```
+- for variable
+	- if only one of them is variable: variable can be substituted by constant
 							X = 1.	
 							X = 'ABZ'.
-							```
-							- if both of them are variables: variables can be substituted by another
-							```
+	- if both of them are variables: variables can be substituted by another
 							X = Y, Y = 2.
-							```
 
 #### complex term(predicate)
-					- same functor + same arity
-					- inner unification reference simple term
-					```prolog
+- same functor + same arity
+- inner unification reference simple term
 					?- like(govern, apple) = like(X, Y).
 					X = govern,
 					Y = apple.
@@ -143,18 +130,15 @@ X is min(1, 2)/2, X is abs(1)/1
 
 					?- like(govern, apple) = hate(X, Y).
 					false.
-					```
-					3. operator compare: =, is, =:=
+3. operator compare: =, is, =:=
 					- = 	compare items of both sides
 					- is 	compare left side and arithmetic result of right 
 					- =:= 	compare arithmetic result of both sides
 
-					4. search strategy: DFS
+4. search strategy: DFS
 					- dfs + backtrack
 					- ! cut -> inhibite backtrack
-
-					5. examples
-					```prolog
+5. examples
 					% recursion
 					% factorial: 0! = 1, 1!= 1,..., 5!=120
 					% basic case
@@ -163,9 +147,7 @@ X is min(1, 2)/2, X is abs(1)/1
 							Num_next is Num - 1,
 							factorial(Num_next, Fact_next),
 							Fact is Num * Fact_next.
-							```
 
-							```prolog
 							% power: 2^0 = 1, 2^1 = 2, ..., 
 							% X ^ Y = Result
 							% power(_, 0, 1).
@@ -173,9 +155,7 @@ X is min(1, 2)/2, X is abs(1)/1
 								Y_next is Y - 1,
 								power(X, Y_next, Result_next),
 								Result is Result_next * X.
-								```
 
-								```prolog
 	% 1, 1, 2, 3, 5, 8, 13, ...
 % fib(index, fib_value)
 	fib(Index, Value) :-
@@ -184,35 +164,28 @@ X is min(1, 2)/2, X is abs(1)/1
 		fib(Index_1, Value1),
 		fib(Index_2, Value2),
 		Value is Value1 + Value2.
-		```
 
 ### Data Structure
 #### List
-		1. [H | T]
+1. [H | T]
 
-		2. Creat
-		- copy
-		```prolog
+2. Creat
+- copy
 		% List Copy
 		copy([H | T], [H | T]).
-		```
-		- duplicate
-		```prolog
+- duplicate
 		% List Duplicate
 		duplicate_twice([], []).
 		duplicate_twice([H | T1], [H, H | T2]) :-
 			duplicate_twice(T1, T2).
-			```
 
-			3. Read - filter
-			```prolog
+3. Read - filter
 			% List Traverse
 			visit([]).
 			visit([H | T]) :-
 				format('Current Visit is : ~w ~n', [H]),
 				visit(T).
-				```
-				```prolog
+
 				visit([]).
 				visit([H | T]) :-
 					% filter
@@ -221,9 +194,7 @@ X is min(1, 2)/2, X is abs(1)/1
 					  X is H ** 2,
 					  format('Result is: ~w ~n', [X]),
 					  visit(T).
-					  ```
-					  4. Update - filter
-					  ```prolog
+4. Update - filter
 					  update([], []).
 					  update([H1 | T1], [H2 | T2]) :-
 						  1 is mod(H1, 2),
@@ -233,5 +204,4 @@ X is min(1, 2)/2, X is abs(1)/1
 							  0 is mod(H1, 2),
 							  H2 = 'b',
 							  update(T1, T2).
-							  ```
 
