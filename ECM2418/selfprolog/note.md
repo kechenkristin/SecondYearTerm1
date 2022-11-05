@@ -3,25 +3,19 @@
 1. Simple
 - variable
 chars start with [A-Z_] and consist with [A-Za-z0-9_]
-```prolog
-?- var(_asd). 
-	true.
-?- var(ada)
-	false.
-	```
+> ?- var(_asd). 
+	> true.
+> ?- var(ada)
+	> false.
 	- constant
 	- atom
 	- chars start with [a-z] and consist with [A-Za-z0-9_]
-	```prolog
-	?- atom(a123).
-	true.
-	```
+	> ?- atom(a123).
+	> true.
 
 	- chars enclosed in ''
-	```prolog
-	?- atom('asdfasd').
-	true.
-	```
+	> ?- atom('asdfasd').
+	> 	true.
 
 	- special characters:
 	, and
