@@ -4,40 +4,45 @@
 - variable
 chars start with [A-Z_] and consist with [A-Za-z0-9_]
 > ?- var(_asd). 
-	> true.
+
+> true.
+
 > ?- var(ada)
-	> false.
-	- constant
-	- atom
-	- chars start with [a-z] and consist with [A-Za-z0-9_]
-	> ?- atom(a123).
-	> true.
 
-	- chars enclosed in ''
-	> ?- atom('asdfasd').
-	> 	true.
+> false.
+- constant
+- atom
+- chars start with [a-z] and consist with [A-Za-z0-9_]
+> ?- atom(a123).
 
-	- special characters:
+> true.
+
+- chars enclosed in ''
+> ?- atom('asdfasd').
+
+> true.
+
+- special characters:
 	, and
 	. or
 	:- imply
 	! cut
 
-	- number
-	- type: integer, float 
-	- operator: +, -, *, /, **, 
-	- built-in func: random, between, succ, abs, max, min, mod, round, ceiling, truncate
+- number
+- type: integer, float 
+- operator: +, -, *, /, **, 
+- built-in func: random, between, succ, abs, max, min, mod, round, ceiling, truncate
 
-	2. Complex
-	consistant with simple term --> fact, predicate
-	- style: functor(Arguments)
-	functor come from 1st atom ([A-Za-z0-9_] start with [a-z]
+2. Complex
+consistant with simple term --> fact, predicate
+- style: functor(Arguments)
+functor come from 1st atom ([A-Za-z0-9_] start with [a-z]
 
-			arguments come from all types of terms pred(pred1(pred2(pred3())))
+arguments come from all types of terms pred(pred1(pred2(pred3())))
 
-			- arity: number of arguments
-			side note: /2 means two arguments.
-			X is min(1, 2)/2, X is abs(1)/1
+- arity: number of arguments
+side note: /2 means two arguments.
+X is min(1, 2)/2, X is abs(1)/1
 
 ### Fact: predicate / relation without variable
 			```prolog
@@ -46,7 +51,7 @@ chars start with [A-Z_] and consist with [A-Za-z0-9_]
 			```
 
 ### Rule: 
-			1. innerquery (logical combination) 
+1. innerquery (logical combination) 
 			```prolog
 			mother(X, Y):-
 			parent(X, Y),
