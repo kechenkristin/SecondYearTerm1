@@ -171,37 +171,46 @@ X is min(1, 2)/2, X is abs(1)/1
 
 2. Creat
 - copy
-		% List Copy
-		copy([H | T], [H | T]).
+```prolog
+% List Copy
+copy([H | T], [H | T]).
+```
 - duplicate
-		% List Duplicate
-		duplicate_twice([], []).
-		duplicate_twice([H | T1], [H, H | T2]) :-
-			duplicate_twice(T1, T2).
+```prolog
+% List Duplicate
+duplicate_twice([], []).
+duplicate_twice([H | T1], [H, H | T2]) :-
+duplicate_twice(T1, T2).
+```
 
 3. Read - filter
-			% List Traverse
-			visit([]).
-			visit([H | T]) :-
-				format('Current Visit is : ~w ~n', [H]),
-				visit(T).
+```prolog
+% List Traverse
+visit([]).
+visit([H | T]) :-
+format('Current Visit is : ~w ~n', [H]),
+visit(T).
 
-				visit([]).
-				visit([H | T]) :-
-					% filter
-					  0 is mod(H, 2),
-					  % map
-					  X is H ** 2,
-					  format('Result is: ~w ~n', [X]),
-					  visit(T).
+visit([]).
+visit([H | T]) :-
+% filter
+0 is mod(H, 2),
+% map
+X is H ** 2,
+format('Result is: ~w ~n', [X]),
+visit(T).
+```
 4. Update - filter
-					  update([], []).
-					  update([H1 | T1], [H2 | T2]) :-
-						  1 is mod(H1, 2),
-						  H2 = 'a',
-						  update(T1, T2).
-						  update([H1 | T1], [H2 | T2]) :-
-							  0 is mod(H1, 2),
-							  H2 = 'b',
-							  update(T1, T2).
+```prolog
+update([], []).
+update([H1 | T1], [H2 | T2]) :-
+1 is mod(H1, 2),
+H2 = 'a',
+update(T1, T2).
+update([H1 | T1], [H2 | T2]) :-
+0 is mod(H1, 2),
+H2 = 'b',
+update(T1, T2).
+```
+
 
