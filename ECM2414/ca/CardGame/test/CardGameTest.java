@@ -39,7 +39,7 @@ public class CardGameTest {
     @Test
     public void testDealCardforPlayer() {
         cardGame.dealCardForPlayer();
-        cardGame.gernerateInitHand();
+        cardGame.generateInitHand();
     }
 
      @Test

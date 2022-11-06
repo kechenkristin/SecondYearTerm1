@@ -28,6 +28,7 @@ public class CardGame {
         private Integer id;
         private boolean win;
 
+
         private final PlayerFileHandler playerFileHandler;
 
 
@@ -51,10 +52,10 @@ public class CardGame {
 
 
         // getters and setters
-        public void setId(Integer id) {
-            this.id = id;
-        }
 
+        public PlayerFileHandler getPlayerFileHandler() {
+            return playerFileHandler;
+        }
 
         public Integer getId() {
             return id;
@@ -72,11 +73,11 @@ public class CardGame {
          * Convert card lists into integer vals list
          */
         private List<Integer> convertCardstoInteger() {
-            List<Integer> vals = new ArrayList<>();
+            List<Integer> vars = new ArrayList<>();
             for (Card c : cards) {
-                vals.add(c.getVal());
+                vars.add(c.getVal());
             }
-            return vals;
+            return vars;
         }
 
         /**
@@ -97,7 +98,9 @@ public class CardGame {
          * check the player wins or not
          */
         public synchronized boolean checkWin() {
-            return checkCardValEqual(convertCardstoInteger());
+            synchronized (playLock) {
+                return checkCardValEqual(convertCardstoInteger());
+            }
         }
 
 
@@ -109,7 +112,6 @@ public class CardGame {
         private Card drawCardFromDeck(CardDeck deck) throws NoCardsException {
             if (deck.getCards().size() == 0) throw new NoCardsException("The deck is empty, could not draw cards!");
             if (deck.getCards().isEmpty()) {
-                // todo : handdle this case
                 System.out.println("The decks should not be empty");
                 return null;
             }
@@ -134,15 +136,17 @@ public class CardGame {
         // todo: where to sychronised
         // todo: test whether the decks List CardGame has modified
         public synchronized void drawCard() throws NoCardsException, EmptyDecksException {
-            if (decks.isEmpty()) {
-                throw new EmptyDecksException("The Decks should not be empty, there is no decks for the card game!");
+            synchronized (playLock) {
+                if (decks.isEmpty()) {
+                    throw new EmptyDecksException("The Decks should not be empty, there is no decks for the card game!");
+                }
+                // which deck the player should draw, p1 -> 1, p2 -> 2 etc
+                Card drawCard = drawCardFromDeck(decks.get(id - 1));
+                // todo : the order of player's hand cards
+                cards.addLast(drawCard);
+                assert drawCard != null;
+                generateDrawString(id, drawCard.getVal());
             }
-            // which deck the player should draw, p1 -> 1, p2 -> 2 etc
-            Card drawCard = drawCardFromDeck(decks.get(id - 1));
-            // todo : the order of player's hand cards
-            cards.addLast(drawCard);
-            assert drawCard != null;
-            generateDrawString(id, drawCard.getVal());
         }
 
         /**
@@ -196,19 +200,21 @@ public class CardGame {
          */
         // todo: where to sychronised
         public synchronized void discardCard() throws NoCardsException, WrongNumberCardsInHandException {
-            if (cards.size() == 0) throw new NoCardsException("The player has no cards in hand to discard!");
-            if (cards.size() != 5)
-                throw new WrongNumberCardsInHandException("The player has wrong number of cards in hand!");
-            int discardDeckId = discardDeckId(numOfPlayers);
-            Card cardToDiscard = findNonPreferCard();
+            synchronized (playLock) {
+                if (cards.size() == 0) throw new NoCardsException("The player has no cards in hand to discard!");
+                if (cards.size() != 5)
+                    throw new WrongNumberCardsInHandException("The player has wrong number of cards in hand!");
+                int discardDeckId = discardDeckId(numOfPlayers);
+                Card cardToDiscard = findNonPreferCard();
 
-            // in case never happen in real world, but still handle it.
-            if (cardToDiscard == null) {
-                win = true;
-                return;
+                // in case never happen in real world, but still handle it.
+                if (cardToDiscard == null) {
+                    win = true;
+                    return;
+                }
+                discardCardFromDeck(cardToDiscard, decks.get(discardDeckId - 1));
+                generateDiscardString(discardDeckId, cardToDiscard.getVal());
             }
-            discardCardFromDeck(cardToDiscard, decks.get(discardDeckId - 1));
-            generateDiscardString(discardDeckId, cardToDiscard.getVal());
         }
 
         /**
@@ -239,46 +245,14 @@ public class CardGame {
             playerFileHandler.write("player " + id + " current hand " + getHandCardsString());
         }
 
-        // todo how to find the winner
-
-        /**
-         * helper method for lastLines
-         *
-         * @param winnerId
-         */
-        private void generateWinString(int winnerId) {
-            if (someWin) {
-                playerFileHandler.write("player " + winnerId + " wins");
-            } else {
-                playerFileHandler.write("player " + winnerId + " has informed player " + id + " that player " + winnerId + " has won");
-            }
-        }
-
-        /**
-         * helper method for lastLines
-         */
-        private void generateEndString() {
-            playerFileHandler.write("player " + id + " exits");
-            playerFileHandler.write("player " + id + " final hand: " + getHandCardsString());
-        }
-
-        private void lastLines(int winnerId) {
-            generateWinString(winnerId);
-            generateEndString();
-        }
-
-
         @Override
         public void run() {
-            // todo syn
-
             while (!someWin) {
                 if (checkWin()) {
                     someWin = true;
-                    lastLines(this.id);
                     deckOutput();
                     System.out.println("Player " + id + " wins the game");
-                    // return;
+                    generateFinalString(id);
                 } else {
                     try {
                         drawCard();
@@ -291,6 +265,12 @@ public class CardGame {
                         throw new RuntimeException(e);
                     }
                     currentHand();
+
+                    try {
+                        Thread.sleep(20);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
         }
@@ -343,14 +323,6 @@ public class CardGame {
         decks = new ArrayList<>();
     }
 
-    public List<Player> getPlayers() {
-        return players;
-    }
-
-    public int getNumOfPlayers() {
-        return numOfPlayers;
-    }
-
     public void setNumOfPlayers(int numOfPlayers) {
         this.numOfPlayers = numOfPlayers;
     }
@@ -359,13 +331,6 @@ public class CardGame {
         this.pack = pack;
     }
 
-    public void setPackFileLocation(String packFileLocation) {
-        this.packFileLocation = packFileLocation;
-    }
-
-    public void setPlayers(List<Player> players) {
-        this.players = players;
-    }
 
     public void setDecks(List<CardDeck> decks) {
         this.decks = decks;
@@ -480,7 +445,7 @@ public class CardGame {
     /**
      * generate init String for each player
      */
-    void gernerateInitHand() {
+    void generateInitHand() {
         for (Player p : players) {
             p.initHand();
         }
@@ -497,65 +462,58 @@ public class CardGame {
     }
 
     /**
-     * Start of the game.
-     * Encapsulate all the game logic of starting game inside one method.
+     * write out final string for deck.
      */
-    public void startGame() {
-        getPlayerNum();
-        getPack();
-        initPlayersAndDecks();
-        dealCardForPlayer();
-        gernerateInitHand();
-        dealCardForDeck();
-    }
-
-    void deckOutput() {
+    public void deckOutput() {
         for (CardDeck cardDeck : decks) {
             cardDeck.generateDeckString();
         }
     }
 
     /**
-     * check the exit logical of the game, if the win flag of one of the players is true, then the game end.
+     * write out final strings for players
+     *
+     * @param winnerId the id of the winner player
      */
-    // todo: implement the win player should notify other player, and exit.
-    private boolean checkGameEnd() {
-        for (Player player : players) {
-            synchronized (playLock) {
-                if (player.checkWin()) {
-                    System.out.println("Player" + player.getId() + "wins");
-                    someWin = true;
-                    return someWin;
-                }
-            }
-        }
-        return someWin;
-    }
-
-    public void informOthers() {
+    public void generateFinalString(int winnerId) {
         for (Player p : players) {
+            if (p.getId().equals(winnerId)) {
+                p.getPlayerFileHandler().write("player " + winnerId + " wins");
+            } else {
+                p.getPlayerFileHandler().write("player " + winnerId + " has informed player " + p.getId() + " that player " + winnerId + " has won");
+            }
+            p.getPlayerFileHandler().write("player " + p.getId() + " exits");
+            p.getPlayerFileHandler().write("player " + p.getId() + " final hand: " + p.getHandCardsString());
         }
     }
 
 
-    // todo : print out the winner methods
+    /**
+     * Start of the game.
+     * Encapsulate all the game logic of starting game inside one method.
+     */
+    public void initGame() {
+        getPlayerNum();
+        getPack();
+        initPlayersAndDecks();
+        dealCardForPlayer();
+        generateInitHand();
+        dealCardForDeck();
+    }
+
+    public void startGame() {
+        initGame();
+        System.out.println("game start.");
+        for (int i = 0; i < numOfPlayers; i++) {
+            (new Thread(players.get(i))).start();
+        }
+    }
 
 
     // main method
     public static void main(String[] args) {
         CardGame cg = new CardGame();
         cg.startGame();
-        System.out.println("game start.");
-
-        for (int i = 0; i < cg.getNumOfPlayers(); i++) {
-            (new Thread(cg.getPlayers().get(i))).start();
-        }
-
-        System.out.println("debug");
-
-        // todo : implement wait notify.
-
-
     }
 
 }
