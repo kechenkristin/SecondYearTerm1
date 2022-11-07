@@ -2,6 +2,8 @@
  * The Card class for the game
  * Each card has a value( positive Integer)
  * Thread safe
+ * @version 1.0
+ * @author Kechen Liu Heegon Kim
  */
 public class Card {
 

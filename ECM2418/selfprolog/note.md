@@ -17,25 +17,28 @@ chars start with [A-Z_] and consist with [A-Za-z0-9_]
 
 > true.
 
-- chars enclosed in ''
+- chars enclosed in ' '
 > ?- atom('asdfasd').
 
 > true.
 
 - special characters:
-	, and
-	. or
-	:- imply
-	! cut
+	- , and
+	- . or
+	- :- imply
+	- ! cut
 
 - number
-- type: integer, float 
-- operator: +, -, *, /, **, 
-- built-in func: random, between, succ, abs, max, min, mod, round, ceiling, truncate
+	- type: integer, float 
+	- operator: +, -, *, /, **, 
+	- built-in func: random, between, succ, abs, max, min, mod, round, ceiling, truncate
 
 2. Complex
+
 consistant with simple term --> fact, predicate
+
 - style: functor(Arguments)
+
 functor come from 1st atom ([A-Za-z0-9_] start with [a-z]
 
 arguments come from all types of terms pred(pred1(pred2(pred3())))
@@ -180,6 +183,8 @@ power(X, Y, Result) :-
 ```prolog
 % 1, 1, 2, 3, 5, 8, 13, ...
 % fib(index, fib_value)
+fib(1, 1) : -!.
+fib(2, 1) : -!.
 fib(Index, Value) :-
 	Index_1 is Index - 1,
 	Index_2 is Index - 2,

@@ -253,6 +253,7 @@ public class CardGame {
                     deckOutput();
                     System.out.println("Player " + id + " wins the game");
                     generateFinalString(id);
+                    return;
                 } else {
                     try {
                         drawCard();
@@ -345,6 +346,8 @@ public class CardGame {
     private void scanNum() {
         Scanner scanner = new Scanner(System.in);
         this.numOfPlayers = scanner.nextInt();
+        // todo: handle it
+
     }
 
     /**
