@@ -47,10 +47,6 @@ public class CardGameTest {
         cardGame.dealCardForDeck();
     }
 
-    @Test
-    public void testStartGame() {
-        cardGame.startGame();
-    }
 
 
 }

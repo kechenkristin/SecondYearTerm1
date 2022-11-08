@@ -44,6 +44,7 @@ functor come from 1st atom ([A-Za-z0-9_] start with [a-z]
 arguments come from all types of terms pred(pred1(pred2(pred3())))
 
 - arity: number of arguments
+
 side note: /2 means two arguments.
 
 X is min(1, 2)/2, X is abs(1)/1
@@ -56,37 +57,39 @@ male(steve)
 
 ### Rule: 
 1. innerquery (logical combination) 
-			mother(X, Y):-
-			parent(X, Y),
-			female(X).
+```prolog
+mother(X, Y):-
+	parent(X, Y),
+	female(X).
 
-			father(X, Y):-
-				parent(X, Y),
-				male(X).
+father(X, Y):-
+	parent(X, Y),
+	male(X).
 
-				sister(X, Y):-
-					parent(Z, X),
-					parent(Z, Y),
-					female(X),
-					X \== Y.
+sister(X, Y):-
+	parent(Z, X),
+	parent(Z, Y),
+	female(X),
+	X \== Y.
 
-					brother(X, Y):-
-						parent(Z, X),
-						parent(Z, Y), 
-						male(X),
-						X \== Y.
+brother(X, Y):-
+	parent(Z, X),
+	parent(Z, Y), 
+	male(X),
+	X \== Y.
 
-						aunt(X, Y):-
-							sister(X, P),
-							parent(P, Y).
+aunt(X, Y):-
+	sister(X, P),
+	parent(P, Y).
 
-							uncle(X, Y):-
-								brother(X, P),
-								parent(P, Y).
+uncle(X, Y):-
+	brother(X, P),
+	parent(P, Y).
 
-								grandparent(X, Y):-
-									parent(X, PY),
-									parent(PY, Y).
+grandparent(X, Y):-
+	parent(X, PY),
+	parent(PY, Y).
+```
 
 
 2. recursion(call itself)
@@ -150,8 +153,48 @@ descendant(X, Y):-
 
 3. operator compare: =, is, =:=
 - = 	compare items of both sides
+
+> ?- Y = 4 + 3.
+
+> Y = 4 + 3.
+
+> ?- X + 3 = 4 + Y.
+
+> ?- X + john = mary + Y.
+
+> X = mary.
+
+> Y = john.
+
 - is 	compare left side and arithmetic result of right 
+
+> ?- Y is 4 + 3.
+
+> Y = 7.
+
 - =:= 	compare arithmetic result of both sides
+
+> ?- 5 + 7 =:= 3 * 4.
+
+> true
+
+- ==  : x==y is true only if x and y are identical(same structure, corresponding components identical)
+
+> ?- X = 1 + 1, X == 1 + 1.
+
+> X = 1 + 1.
+
+> ?- X = 1 + 1, X == 2.
+
+> false.
+
+> ?- X is 1 + 1, X == 1 + 1.
+
+> false.
+
+> ?- X is 1 + 1, X == 2.
+
+> X = 2.
 
 4. search strategy: DFS
 - dfs + backtrack
@@ -195,7 +238,7 @@ fib(Index, Value) :-
 
 ### Data Structure
 #### List
-1. [H | T]
+1. [H | T] or .(H, T)
 
 2. Creat
 - copy
