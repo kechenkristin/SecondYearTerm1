@@ -8,10 +8,50 @@ import java.util.Scanner;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
 /**
- * the entrance for the card game
+ * CardGame class, the main logic for the whole game
+ *
+ * @author kristin heegon
+ * @version 1.0
  */
 public class CardGame {
 
+    // fields
+    /**
+     * the number of players for the cardgame(n), get from user's input in command line
+     */
+    private int numOfPlayers;
+
+
+    /**
+     * The pack for the card game, which is a source of all cards for the card game,
+     * get from .txt file(need to know the location)
+     */
+    private List<Card> pack;
+
+    /**
+     * the location of the source file for pack
+     */
+    private String packFileLocation;
+
+    /**
+     * All the players in the CardGame
+     */
+    private volatile List<Player> players;
+
+    /**
+     * All the decks in the CardGame;
+     */
+    private volatile List<CardDeck> decks;
+
+    /**
+     * Game end flag, if someone has won the game
+     */
+    public volatile boolean someoneWin = false;
+
+    /**
+     * a lock for all players of the game
+     */
+    static final Object playLock = new Object();
 
     /**
      * the Player for the game
@@ -26,8 +66,6 @@ public class CardGame {
          * the unique id of each player
          */
         private Integer id;
-        private boolean win;
-
 
         private final PlayerFileHandler playerFileHandler;
 
@@ -35,8 +73,7 @@ public class CardGame {
         /**
          * Each player will hold a hand of 4 cards
          */
-        // todo update to be private
-        volatile ConcurrentLinkedDeque<Card> cards;
+        private volatile ConcurrentLinkedDeque<Card> cards;
 
         // constructor
 
@@ -45,14 +82,12 @@ public class CardGame {
          */
         public Player(Integer id) {
             this.id = id;
-            win = false;
             cards = new ConcurrentLinkedDeque<>();
             playerFileHandler = new PlayerFileHandler(id);
         }
 
 
         // getters and setters
-
         public PlayerFileHandler getPlayerFileHandler() {
             return playerFileHandler;
         }
@@ -71,6 +106,8 @@ public class CardGame {
 
         /**
          * Convert card lists into integer vals list
+         *
+         * @return an Integer list of card ids
          */
         private List<Integer> convertCardstoInteger() {
             List<Integer> vars = new ArrayList<>();
@@ -133,8 +170,6 @@ public class CardGame {
         /**
          * A player draw a card form the top of the deck to their right.
          */
-        // todo: where to sychronised
-        // todo: test whether the decks List CardGame has modified
         public synchronized void drawCard() throws NoCardsException, EmptyDecksException {
             synchronized (playLock) {
                 if (decks.isEmpty()) {
@@ -174,8 +209,7 @@ public class CardGame {
          *
          * @return the card to discard
          */
-        // todo : update to be private
-        Card findNonPreferCard() {
+        private Card findNonPreferCard() {
             for (Card card : cards) {
                 if (!card.getVal().equals(id)) {
                     cards.remove(card);
@@ -198,7 +232,6 @@ public class CardGame {
         /**
          * A player discard a card form the top of the deck to their right.
          */
-        // todo: where to sychronised
         public synchronized void discardCard() throws NoCardsException, WrongNumberCardsInHandException {
             synchronized (playLock) {
                 if (cards.size() == 0) throw new NoCardsException("The player has no cards in hand to discard!");
@@ -209,7 +242,6 @@ public class CardGame {
 
                 // in case never happen in real world, but still handle it.
                 if (cardToDiscard == null) {
-                    win = true;
                     return;
                 }
                 discardCardFromDeck(cardToDiscard, decks.get(discardDeckId - 1));
@@ -247,9 +279,9 @@ public class CardGame {
 
         @Override
         public void run() {
-            while (!someWin) {
+            while (!someoneWin) {
                 if (checkWin()) {
-                    someWin = true;
+                    someoneWin = true;
                     deckOutput();
                     System.out.println("Player " + id + " wins the game");
                     generateFinalString(id);
@@ -277,51 +309,24 @@ public class CardGame {
         }
     }
 
-
-    // fields
-    /**
-     * the number of players for the cardgame(n), get from user's input in command line
-     */
-    private int numOfPlayers;
-
-
-    /**
-     * The pack for the card game, which is a source of all cards for the card game,
-     * get from .txt file(need to know the location)
-     */
-    private List<Card> pack;
-
-    /**
-     * the location of the source file for pack
-     */
-    private String packFileLocation;
-
-    /**
-     * All the players in the CardGame
-     */
-    private volatile List<Player> players;
-
-    /**
-     * All the decks in the CardGame;
-     */
-    private volatile List<CardDeck> decks;
-
-    /**
-     * Game end flag, if someone has won the game
-     */
-    private volatile boolean someWin = false;
-
-    /**
-     * a lock for all players of the game
-     */
-    static final Object playLock = new Object();
-
     // constructors
-    // default
     public CardGame() {
         pack = new ArrayList<>();
         players = new ArrayList<>();
         decks = new ArrayList<>();
+    }
+
+    // getters & setters
+    public int getNumOfPlayers() {
+        return numOfPlayers;
+    }
+
+    public List<CardDeck> getDecks() {
+        return decks;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
     }
 
     public void setNumOfPlayers(int numOfPlayers) {
@@ -339,30 +344,30 @@ public class CardGame {
 
     // methods
 
-
     /**
-     * helper methods for getPLayNumber, scan user's input for command line
+     * If the number of players is invalid, inform the user and request a valid number of player
      */
-    private void scanNum() {
-        Scanner scanner = new Scanner(System.in);
-        this.numOfPlayers = scanner.nextInt();
-        // todo: handle it
-
+    void informUserForValidNumofPlayer() {
+        System.out.println("The number of players is invalid. Please provide a valid number.");
+        getPlayerNum();
     }
 
     /**
      * Request via the command line the number of players in the game
      */
-    public void getPlayerNum() {
+    void getPlayerNum() {
         System.out.println("Please enter the number of players:");
-        scanNum();
+        Scanner scanner = new Scanner(System.in);
+        int num = scanner.nextInt();
+        if (num <= 0) informUserForValidNumofPlayer();
+        this.numOfPlayers = num;
     }
 
 
     /**
      * scan the location of pack file form input in command line
      */
-    private void scanFileLocation() {
+    void scanFileLocation() {
         System.out.println("Please enter location of pack to load");
         Scanner scanner = new Scanner(System.in);
         this.packFileLocation = scanner.next();
@@ -371,12 +376,11 @@ public class CardGame {
     /**
      * Read the card value form the target file.
      * check the validity of the pack file
-     * 1. all the numbers are > 0
+     * 1. all the numbers are >= 0
      * 2. 8n number
      * fielLocation: The location of the file
      */
-
-    private void readPackFile(String fileLocation) {
+    void readPackFile(String fileLocation) {
         BufferedReader reader;
         int count = 0;
         try {
@@ -386,8 +390,9 @@ public class CardGame {
                 count++;
                 int number = Integer.parseInt(line);
 
+                // if the value of the card is not a negative integer,
                 if (number < 0) {
-                    informUser();
+                    informUserForValidPack(" The pack is invalid(contains negative value. Please provide a valid pack location.");
                     return;
                 }
 
@@ -396,8 +401,9 @@ public class CardGame {
                 line = reader.readLine();
             }
 
+            // if the amount of pack cards are not correct
             if (count != numOfPlayers * 8) {
-                informUser();
+                informUserForValidPack(" The pack is invalid(Not correct number of pack cards) Please provide a valid pack location.");
             }
             reader.close();
         } catch (Exception e) {
@@ -409,8 +415,8 @@ public class CardGame {
     /**
      * If the pack is invalid, inform the user and request a valid pack file
      */
-    private void informUser() {
-        System.out.println("The pack is invalid. Please provide a valid pack location.");
+    void informUserForValidPack(String informString) {
+        System.out.println(informString);
         pack = new ArrayList<>();
         getPack();
     }
@@ -418,7 +424,7 @@ public class CardGame {
     /**
      * get the pack for the card game.
      */
-    public void getPack() {
+    void getPack() {
         scanFileLocation();
         readPackFile(packFileLocation);
     }
@@ -440,7 +446,6 @@ public class CardGame {
     void dealCardForPlayer() {
         // copy the first part of the list to deal to the player
         for (int i = 0; i < numOfPlayers * 4; i++) {
-            // todo : check it later
             players.get((i % numOfPlayers)).cards.add(pack.get(i));
         }
     }
@@ -459,7 +464,6 @@ public class CardGame {
      */
     void dealCardForDeck() {
         for (int i = numOfPlayers * 4; i < numOfPlayers * 8; i++) {
-            // todo : check it later
             decks.get((i % numOfPlayers)).cards.add(pack.get(i));
         }
     }
@@ -467,7 +471,7 @@ public class CardGame {
     /**
      * write out final string for deck.
      */
-    public void deckOutput() {
+    void deckOutput() {
         for (CardDeck cardDeck : decks) {
             cardDeck.generateDeckString();
         }
@@ -492,10 +496,10 @@ public class CardGame {
 
 
     /**
-     * Start of the game.
-     * Encapsulate all the game logic of starting game inside one method.
+     * Initializing the game.
+     * Encapsulate all the game logic of initialization and configuration game inside one method.
      */
-    public void initGame() {
+    void initGame() {
         getPlayerNum();
         getPack();
         initPlayersAndDecks();
@@ -504,9 +508,14 @@ public class CardGame {
         dealCardForDeck();
     }
 
+    /**
+     * Method to start the game
+     */
     public void startGame() {
+        // initialize the game
         initGame();
         System.out.println("game start.");
+        // create player thread
         for (int i = 0; i < numOfPlayers; i++) {
             (new Thread(players.get(i))).start();
         }
@@ -515,8 +524,9 @@ public class CardGame {
 
     // main method
     public static void main(String[] args) {
+        // create game instance
         CardGame cg = new CardGame();
+        // call method to start the game
         cg.startGame();
     }
-
 }

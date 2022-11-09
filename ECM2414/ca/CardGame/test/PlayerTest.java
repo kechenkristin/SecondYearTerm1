@@ -7,6 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
+
+/**
+ * Test class for Player class
+ * @version 1.0
+ * @author kechen heegon
+ */
 public class PlayerTest {
 
     CardGame cardGame;
@@ -264,25 +270,6 @@ public class PlayerTest {
     }
 
     /**
-     * 1, 2, 3, 4 => 2
-     */
-    @Test
-    public void testfindNonPerferCard1() {
-        player1.setCards(playerCards1);
-        int ac = player1.findNonPreferCard().getVal();
-        assertEquals(2, ac);
-    }
-
-    /**
-     * 1, 1, 1, 1 => null
-     */
-    @Test
-    public void testfindNonPerferCard2() {
-        player1.setCards(playerCards2);
-        assertNull(player1.findNonPreferCard());
-    }
-
-    /**
      * test player's discard methods, if the player don't have cards in hand.
      */
     @Test
@@ -343,8 +330,6 @@ public class PlayerTest {
 
         deck1.setCards(deckCards1);
         // create deck List
-
-
 
         try {
             player4.discardCard();

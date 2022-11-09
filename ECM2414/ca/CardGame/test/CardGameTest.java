@@ -7,12 +7,21 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
+
+/**
+ * Test class for CardGame class
+ * @version 1.0
+ * @author kechen heegon
+ */
 public class CardGameTest {
     CardGame cardGame;
     List<CardGame.Player> players;
     List<CardDeck> decks;
     List<Card> pack;
 
+    /**
+     * init and configuration for cardgame
+     */
     @Before
     public void init() {
         cardGame = new CardGame();
@@ -31,22 +40,37 @@ public class CardGameTest {
         pack = null;
     }
 
+    /**
+     * test, if initial successfully, the number of players and decks should be 4
+     */
     @Test
     public void testInitPlayerAndDecks() {
-        cardGame.initPlayersAndDecks();
+        assertEquals(4, cardGame.getNumOfPlayers());
+        assertEquals(4, cardGame.getPlayers().size());
+        assertEquals(4, cardGame.getDecks().size());
     }
 
+    /**
+     * test dealCardForPlayer method
+     */
     @Test
     public void testDealCardforPlayer() {
         cardGame.dealCardForPlayer();
         cardGame.generateInitHand();
+
+        //each player has 4 cards in their hand
+        assertEquals(4, cardGame.getPlayers().get(0).getCards().size());
     }
 
+    /**
+     * test dealCardForDeck method
+     */
      @Test
     public void testDealCardforDeck() {
         cardGame.dealCardForDeck();
+        // each deck has 4 cards
+         assertEquals(4, cardGame.getDecks().get(2).getCards().size());
     }
-
 
 
 }
