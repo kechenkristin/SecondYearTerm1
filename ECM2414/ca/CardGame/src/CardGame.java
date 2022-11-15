@@ -387,6 +387,10 @@ public class CardGame {
             reader = new BufferedReader(new FileReader(fileLocation));
             String line = reader.readLine();
             while (line != null) {
+                if (line.contains(".")) {
+                    informUserForValidPack("pack number contains decimal. Please provide a valid pack!");
+                    return;
+                }
                 count++;
                 int number = Integer.parseInt(line);
 
