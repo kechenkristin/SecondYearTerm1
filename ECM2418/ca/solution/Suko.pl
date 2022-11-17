@@ -1,3 +1,4 @@
+/*Begin Question 3.1*/
 match([H|_],0,H) :- !.
 match([_|T],N,H) :-
 	N1 is N-1,
@@ -8,17 +9,21 @@ accindices([H1|T1],L2,OldAcc,Result) :-
 	match(L2,H1,H3),
 	accindices(T1,L2,[H3|OldAcc],Result).
 
+% reverse a list accumulator
 accRev([H|T],A,R) :- 
 	accRev(T,[H|A],R).
 	accRev([],A,A).
 
+% wrapper for accRev
 rev(L,R) :- accRev(L,[],R).
 
 indices(IS,XS,ES) :- 
 	accindices(IS,XS,[],RS), 
 	rev(RS,ES).
+/*End Question 3.1*/
 
 
+/*Begin Question 3.2*/
 takeout(X,[X|R],R).
 takeout(X,[F|R],[F|S]) :- takeout(X,R,S).
 
@@ -26,12 +31,16 @@ perm([],[]).
 perm([X|Y],Z) :- perm(Y,W), takeout(X,Z,W).
 
 possible(GRID) :- perm([1,2,3,4,5,6,7,8,9],GRID).
+/*End Question 3.2*/
 
+ /*Begin Question 3.3*/
+% accumulator sum of element in a list
 accsum([],A,A).
 accsum([H|T],AccOld,Sum) :-
 	AccNew is AccOld + H,
 	accsum(T,AccNew,Sum).
 
+% wrapper
 sum_list(L,S) :- accsum(L,0,S).
 
 acceptable(T0,T1,T2,T3,US,U,VS,V,WS,W,GRID) :-
@@ -54,3 +63,4 @@ acceptable(T0,T1,T2,T3,US,U,VS,V,WS,W,GRID) :-
 suko(T0,T1,T2,T3,US,U,VS,V,WS,W,GRID) :-
 	possible(GRID),
 	acceptable(T0,T1,T2,T3,US,U,VS,V,WS,W,GRID).
+/*End Question 3.3*/
