@@ -15,43 +15,62 @@ has_factor(N,F) :-
 /*Begin Question 4.1*/
 
 /*Begin Question 4.2*/
-first(NQ,N) :-
+north_east(NQ,N) :-
         NQ = 1,
         between(0,90,N).
-second(NQ,N) :-
+south_east(NQ,N) :-
         NQ = 2,
         between(91,180,N).
-third(NQ,N) :-
+south_west(NQ,N) :-
         NQ = 3,
         between(181,270,N).
-forth(NQ,N) :-
+north_west(NQ,N) :-
         NQ = 4,
         between(271,359,N).
 
+% convert quadrant into bearing.
+qtn(XQ,X) :-
+	north_east(XQ,X);
+	south_east(XQ,X);
+	south_west(XQ,X);
+	north_west(XQ,X).
+
+% convert three bearing into quadrant.
 quadrant_to_num(XQ,YQ,ZQ,X,Y,Z) :-
-        (first(XQ,X);
-        second(XQ,X);
-        third(XQ,X);
-        forth(XQ,X)),
+	qtn(XQ,X),
+	qtn(YQ,Y),
+	qtn(ZQ,Z).
 
-        (first(YQ,Y);
-        second(YQ,Y);
-        third(YQ,Y);
-        forth(YQ,Y)),
+% calculate combination
+combination(0, _, []) :- !.
+combination(N, L, [V|R]) :-
+	N > 0,
+	NN is N - 1,
+	com_helper(V, L, Rem),
+	combination(NN, Rem, R).
 
-        (first(ZQ,Z);
-        second(ZQ,Z);
-        third(ZQ,Z);
-        forth(ZQ,Z)).
+% helper for calculating combination
+com_helper(X,[X|L],L).
+com_helper(X,[_|L],R) :- com_helper(X,L,R).
+
+% given three numbers, compare whether they are prime or not.
+xyz_not_prime(X,Y,Z) :-
+	not(prime(X)),
+	not(prime(Y)),
+	not(prime(Z)).
 
 
 possible(X,Y,Z) :-
-        permutation([1,2,3,4],[XQ,YQ,ZQ,_]),
-        quadrant_to_num(XQ,YQ,ZQ,X,Y,Z).
+	combination(3,[1,2,3,4],[XQ,YQ,ZQ]),
+        quadrant_to_num(XQ,YQ,ZQ,X,Y,Z),
+	xyz_not_prime(X,Y,Z),
+	three_num_list_sort(X,Y,Z,L),
+	same_list(L,[1,2,3,4,5,6,7,8,9]).
 /*End Question 4.2*/
 
 
-/*Begin Question 4.1*/
+/*Begin Question 4.3*/
+% accumulator convert a num into a list of digits.
 num_list_acc(0,A,A) :- !.
 num_list_acc(X,OldAcc,L) :-
 	XLast is X mod 10,
@@ -59,8 +78,10 @@ num_list_acc(X,OldAcc,L) :-
 	XRemain is X // 10,
 	num_list_acc(XRemain,NewAcc,L).
 
+% wrapper
 num_list(X,L) :- num_list_acc(X,[],L).
 
+% convert three three-digits number into a list of 9 elements.
 three_num_list(X,Y,Z,LR) :-
 	num_list(X,L1),
 	num_list(Y,L2),
@@ -68,19 +89,33 @@ three_num_list(X,Y,Z,LR) :-
 	append(L1,L2,LT),
 	append(LT,L3,LR).
 
+% convert three three-digits number into a sort list of 9 elements.
 three_num_list_sort(X,Y,Z,LRS) :- 
 	three_num_list(X,Y,Z,LR),
 	sort(LR,LRS).
 
+% compare whether two lists are same or not.
 same_list([],[]).
 same_list([H1|T1],[H2|T2]) :-
 	H1 = H2,
 	same_list(T1,T2).
 
+
+% given three numbers, find them in an ascending order or not.
+ascending_order(X,Y,Z) :-
+	X < Y,
+	Y < Z.
+
+different_quadrants(X,Y,Z) :-
+	quadrant_to_num(XQ,YQ,ZQ,X,Y,Z),
+	XQ =\= YQ,
+	XQ =\= ZQ,
+	YQ =\= ZQ.
+
 acceptable(X,Y,Z) :-
-	not(prime(X)),
-	not(prime(Y)),
-	not(prime(Z)),
+	ascending_order(X,Y,Z),
+	xyz_not_prime(X,Y,Z),
+	different_quadrants(X,Y,Z),
 	three_num_list_sort(X,Y,Z,L),
 	same_list(L,[1,2,3,4,5,6,7,8,9]).
 

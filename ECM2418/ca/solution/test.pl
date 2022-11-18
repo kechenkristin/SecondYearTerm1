@@ -37,20 +37,16 @@ forth(NQ,N) :-
 	NQ = 4,
 	between(271,359,N).
 
-quadrant_to_num(XQ,YQ,ZQ,X,Y,Z) :-
-	(first(XQ,X);
+qtn(XQ,X) :-
+	first(XQ,X);
 	second(XQ,X);
 	third(XQ,X);
-	forth(XQ,X)),
-	(first(YQ,Y);
-	second(YQ,Y);
-	third(YQ,Y);
-	forth(YQ,Y)),
+	forth(XQ,X).
 
-	(first(ZQ,Z);
-	second(ZQ,Z);
-	third(ZQ,Z);
-	forth(ZQ,Z)).
+quadrant_to_num(XQ,YQ,ZQ,X,Y,Z) :-
+	qtn(XQ,X),
+	qtn(YQ,Y),
+	qtn(ZQ,Z).
 
 
 possible(X,Y,Z) :-
@@ -64,3 +60,29 @@ pp(X,Y,Z) :-
 	X =\= Y,
 	X =\= Z,
 	Y =\= Z.
+
+ppq(XQ,YQ,ZQ) :-
+	(XQ is 1,
+	YQ is 2,
+	ZQ is 3);
+	(XQ is 1,
+	YQ is 2,
+	ZQ is 4);
+	(XQ is 1,
+	YQ is 3,
+	ZQ is 4);
+	(XQ is 2,
+	YQ is 3,
+	ZQ is 4).
+
+combination(0, _, []) :-
+    !.
+combination(N, L, [V|R]) :-
+    N > 0,
+    NN is N - 1,
+    unknown(V, L, Rem),
+    combination(NN, Rem, R).
+
+unknown(X,[X|L],L).
+unknown(X,[_|L],R) :-
+    unknown(X,L,R).
