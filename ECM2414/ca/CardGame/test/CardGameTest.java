@@ -19,6 +19,8 @@ public class CardGameTest {
     List<CardDeck> decks;
     List<Card> pack;
 
+    CardGame cardGame2;
+
     /**
      * init and configuration for cardgame
      */
@@ -32,6 +34,9 @@ public class CardGameTest {
         }
         cardGame.setPack(pack);
         cardGame.initPlayersAndDecks();
+
+        cardGame2 = new CardGame();
+        cardGame2.setNumOfPlayers(4);
     }
 
     @After
@@ -70,6 +75,19 @@ public class CardGameTest {
         cardGame.dealCardForDeck();
         // each deck has 4 cards
          assertEquals(4, cardGame.getDecks().get(2).getCards().size());
+    }
+
+    /*
+    test a game scenario
+     */
+    @Test
+    public void testStartGame() {
+         cardGame2.readPackFile("test.txt");
+         cardGame2.initPlayersAndDecks();
+         cardGame2.dealCardForPlayer();
+         cardGame2.generateInitHand();
+         cardGame2.dealCardForDeck();
+         cardGame2.runPlayer();
     }
 
 

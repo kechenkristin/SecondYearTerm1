@@ -60,12 +60,22 @@ xyz_not_prime(X,Y,Z) :-
 	not(prime(Z)).
 
 
+/*
 possible(X,Y,Z) :-
 	combination(3,[1,2,3,4],[XQ,YQ,ZQ]),
         quadrant_to_num(XQ,YQ,ZQ,X,Y,Z),
 	xyz_not_prime(X,Y,Z),
 	three_num_list_sort(X,Y,Z,L),
 	same_list(L,[1,2,3,4,5,6,7,8,9]).
+*/
+possible(X,Y,Z) :-
+	between(0,359,X),
+        between(0,359,Y),
+        between(0,359,Z),
+        X =\= Y,
+        X =\= Z,
+        Y =\= Z.
+
 /*End Question 4.2*/
 
 

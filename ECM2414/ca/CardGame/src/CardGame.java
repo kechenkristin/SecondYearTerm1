@@ -513,16 +513,23 @@ public class CardGame {
     }
 
     /**
+     * Create thread to run each player
+     */
+    void runPlayer() {
+        // create player thread
+        for (int i = 0; i < numOfPlayers; i++) {
+            (new Thread(players.get(i))).start();
+        }
+    }
+
+    /**
      * Method to start the game
      */
     public void startGame() {
         // initialize the game
         initGame();
         System.out.println("game start.");
-        // create player thread
-        for (int i = 0; i < numOfPlayers; i++) {
-            (new Thread(players.get(i))).start();
-        }
+        runPlayer();
     }
 
 
