@@ -44,6 +44,9 @@ player 1 current hand 1 1 22 7
 player 1 draws a 2 from deck 1
 player 1 discards a 22 to deck 2
 player 1 current hand 1 1 7 2 
+player 1 draws a 22 from deck 1
+player 1 discards a 7 to deck 2
+player 1 current hand 1 1 2 22 
 player 4 has informed player 1 that player 4 has won
 player 1 exits
-player 1 final hand: 1 1 7 2 
+player 1 final hand: 1 1 2 22 

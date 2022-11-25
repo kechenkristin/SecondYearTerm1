@@ -77,17 +77,9 @@ public class CardGameTest {
          assertEquals(4, cardGame.getDecks().get(2).getCards().size());
     }
 
-    /*
-    test a game scenario
-     */
     @Test
-    public void testStartGame() {
+    public void testReadPackFile() {
          cardGame2.readPackFile("test.txt");
-         cardGame2.initPlayersAndDecks();
-         cardGame2.dealCardForPlayer();
-         cardGame2.generateInitHand();
-         cardGame2.dealCardForDeck();
-         cardGame2.runPlayer();
     }
 
 
