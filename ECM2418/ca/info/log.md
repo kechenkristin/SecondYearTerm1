@@ -278,3 +278,19 @@ X = 358,
 Y = 249,
 Z = 176 ;
 ```
+
+### 12.8 update
+change the final question
+update method to find whether the list contains 1-9
+```prolog
+contains(1, _) :- !.
+
+contains(X, List) :-
+    member(X, List),
+    NewX is X - 1,
+    contains(NewX, List).
+```
+
+test prolog can run in the online ide
+
+### todo optimize the running speed
