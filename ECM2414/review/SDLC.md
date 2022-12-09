@@ -1,3 +1,38 @@
+## Note
+### 1.broad categories
+- requirement analysis
+- design
+- implementation
+- testing
+- evolution
+
+### 2.methodologies
+- waterfall
+	- features
+		- approval to move next
+		- well documented
+		- expensive to fix
+	- senarios
+		- the product defnition is stable
+		- technology to be used is understood, and enough resources with required expertise are available
+		- the requirements are very well known, clear and fixed
+		- small project
+
+- prototyping
+	design & user
+
+- rapid application developmet
+	- reply on tools
+	- prioritise ddl
+
+- agile development
+	- same as 1
+
+- scrum
+	- based on short fixed-length sprints (beginning meeting)
+	- typical 2-4 weeks long
+	- daily scrum meeting (final review)
+
 ## Exercise
 1. When shall we consider to use the waterfall model?
 Select one or more:
