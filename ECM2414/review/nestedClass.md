@@ -19,8 +19,8 @@ class Car {
 	}
 }
 ```
-- does not have access to instance members
-- Accessed using enclosing class name
+- does **not** have access to **instance** members
+- Accessed using enclosing **class** name
 ```java
 Car.Gearbox
 ```
@@ -40,8 +40,8 @@ class Car {
 	}
 }
 ```
-- does have access to instance members
-- Inner classes can be directly accessed by the enclosing instance
+- does **have** access to **instance** members
+- Inner classes can be directly accessed by the enclosing **instance**
 - construct
 	- from inside class
 ```java
@@ -79,9 +79,9 @@ public class LocalClassExample {
 
 - Local class declaration cannot contain public, protected, private, or static access modifiers. 
 
-- Cannot access method local variables (unless passed as arguments) unless they are declared as final.
+- Cannot access method local variables (unless passed as arguments) unless they are declared as **final**.
 
-- Can access all the members of the outer class instance like standard inner class members.  
+- Can access all the members of the outer class instance **like standard inner class members.**  
 
 ## Anonymous class
 - code
@@ -130,7 +130,7 @@ bc
 
 ### nested class
 4. What are the benefits of nested classes?  
-Select one or more:
+Select one or more:  
 a. It can lead to more readable and maintainable code  
 b. It increases encapsulation  
 c. It is a way of logically grouping classes that are only used in one place   
