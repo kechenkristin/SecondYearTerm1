@@ -1,4 +1,5 @@
 ## Third Part - FA 20 marks
+video: https://www.youtube.com/watch?v=WQ8bJooiEeQ&list=PLLOxZwkBK52CTVrHjYa7-SpXlEtef1TqL  
 ### DFA 
 #### Do something with a provided graph - 5 marks
 - transfer DFA graph to transition table   
