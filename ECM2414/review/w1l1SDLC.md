@@ -35,7 +35,7 @@
 
 ## Exercise
 1. When shall we consider to use the waterfall model?
-Select one or more:
+Select one or more:  
 a. The product definition is stable.  
 b. Technology to be used is understood, and enough resources with required expertise are available.  
 c. The requirements are very well known, clear and fixed.  
@@ -43,15 +43,15 @@ d. The project is long.
 abc
 
 2. When shall we consider to use Prototype model?
-Select one or more:
+Select one or more:  
 a. Designing a human computer interface system.  
 b. The desired system needs to have a lot of interaction with the end users.  
 c. Designing an online system.  
-d. The prototype model is not useful.
+d. The prototype model is not useful.  
 abc  
 
 3. What are the benefits of pair programming?  
-Select one or more:
+Select one or more:  
 a. The driver can focus all their attention on the implementation and coding.  
 b. A person can be responsible for mistakes.  
 c. It’s a good way of transferring skills to junior developers.  

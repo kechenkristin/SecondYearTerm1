@@ -1,9 +1,10 @@
 ## Note
+https://www.yuque.com/mo_ming/gl7b70/gw2xt5
 ### three liveness issues with multi-threading
 - Deadlock
 ![avatar](https://github.com/kechenkristin/imagesGitHub/blob/main/notes/uni/deadlock.png)  
 - Starvation
-- Livelock
+- Livelock  
 two threads are too busy responding to one another to do work  
 活锁出现在两个线程互相改变对方的结束条件，最后谁也无法结束，例如  
 ```java
@@ -70,6 +71,7 @@ public synchronized notifyBob() {
 	- current thread pause, other thread execute
 - join()
 	- wait for the thread which calls join() method
+	- 哪个线程调用join()就等待哪个线程
 ```java
 t.join()
 ```
