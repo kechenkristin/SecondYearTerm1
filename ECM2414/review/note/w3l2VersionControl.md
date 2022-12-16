@@ -7,6 +7,7 @@ a. Class files of Java programs need to be stored in the version control system.
 b. Version control can be a centralised system, or a distributed system.  
 c. Version control is a fundamental tool in modern software development, with which you can go back to previous states of your development, so it provides a project-wide undo button.  
 d. Version control allows you to see who has done what and make it much easier to deal with some surprising code.  
+b, c, d
 
 2. Choose the correct statement(s) of version control from the below. Select one or more:  
 a. In distributed version control, each user gets his or her own repository and working copy. After you commit, others have no access to your changes until you push your changes to the central repository. When you update, you do not get others' changes unless you have first pulled those changes into your repository.  

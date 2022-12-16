@@ -2,7 +2,7 @@
 https://www.yuque.com/mo_ming/gl7b70/gw2xt5
 ### three liveness issues with multi-threading
 - Deadlock
-![avatar](https://github.com/kechenkristin/imagesGitHub/blob/main/notes/uni/deadlock.png)  
+![avatar](https://github.com/kechenkristin/imagesGitHub/blob/main/notes/uni/ecm2414/deadlock.png)  
 - Starvation
 - Livelock  
 two threads are too busy responding to one another to do work  
@@ -35,7 +35,7 @@ public class TestLiveLock {
 }
 ```
 ### Thread Lifecycle
-![avatar](https://github.com/kechenkristin/imagesGitHub/blob/main/notes/uni/lifecycle.png)
+![avatar](https://github.com/kechenkristin/imagesGitHub/blob/main/notes/uni/ecm2414/lifecycle.png)
 
 ### Some further tools/methods to help design better threaded applications
 - wait() notify() 
@@ -92,7 +92,7 @@ a, b, c, d
 ### thread lifecycle
 1. Choose the correct the statement(s) about the thread lifecycle from the below. Select one or more:  
 a. A thread is considered dead when its run() method completes.  
-b. When the start() method is called on a thread it enters the runnable state. 
+b. When the start() method is called on a thread it enters the runnable state.   
 c. Thread scheduler selects a thread to go from the runnable state to the running state. In the running state, the thread starts executing by entering the run() method.  
 d. When the instance of a thread is created using the new operator it is in the new state, but the start() method has not been invoked on the thread yet, thread is not eligible to run yet.  
 a, b, c, d  

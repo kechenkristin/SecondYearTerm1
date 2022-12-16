@@ -31,7 +31,8 @@
 - scrum
 	- based on short fixed-length sprints (beginning meeting)
 	- typical 2-4 weeks long
-	- daily scrum meeting (final review)
+	- daily scrum meeting 
+	- Sprint review (final review)
 
 ## Exercise
 1. When shall we consider to use the waterfall model?

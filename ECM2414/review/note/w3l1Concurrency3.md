@@ -44,6 +44,7 @@ class UnsafeStates {
 https://github.com/Matty-GCU/Note/blob/master/JavaSE/Java8%20Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F.2021.11.08.md  
 - **zero or more** arguments
 - argument types can be **decleared** and **inferred**
+- allows you to pass a block of code around between objects
 
 ## Exercise
 ### Visibility
