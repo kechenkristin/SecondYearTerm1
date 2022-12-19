@@ -8,9 +8,15 @@
 	- Detailed design
 - Testing
 	- Unit testing
+		- individual blocks of code
+		- object/class/method level
 	- Integration testing
+		- integrated
 	- System testing
+		- testing the entire system as a whole
+		- other applications working on the same system
 	- User acceptance testing(UAT)
+		- validation 
 - Advantages/disadvantages of the V model
 ![avatar](https://github.com/kechenkristin/imagesGitHub/blob/main/notes/uni/ecm2414/Vmodel.png)
 
@@ -44,8 +50,10 @@ assessing documents(review, walkthroughs, ...)
 	- Predicate coverage
 		- condition
 - EMMA
+an open source code coverage tool
 
 ### Corner cases
+related to **edge cases**
 ### Limits of testing
 
 ## Exercise
@@ -56,6 +64,23 @@ b. The V-model is simple to understand and easy to manage.
 c. The V-model is a good choice for a large project with changing requirements.  
 d. With the V-model, you don’t get a working software until very late of the cycle.  
 a, b, d  
+
+2. When should you consider to use the V-model of software development?  
+(A) When the project is large.  
+(B) When the project is small.  
+(C) When the requirements are varying.  
+(D) When the requirements are ambiguous.  
+b  
+
+### Testing
+Choose the correct statement(s) about the importance of unit testing.  
+(A) It can reduce the overall debugging time.  
+(B) It shows the expected behaviours of the code on various inputs.  
+(C) It allows the testing of whether the method of an object works well with other programs of the system.  
+(D) It allows the testing of whether the method of an object works well with other methods of the same object  
+a, b  
+// c ===> system testing  
+// d ===> integration testing  
 
 ### Testing Categories
 1. Choose the correct statement(s) on the dynamic testing from the below. Select one or more:  
