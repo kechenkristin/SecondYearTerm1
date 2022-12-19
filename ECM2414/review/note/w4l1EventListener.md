@@ -7,18 +7,21 @@ https://github.com/kechenkristin/SecondYearTerm1/blob/main/ECM2414/extra/EventLi
 		- polling for the event
 		- event-driven programming
 - Why - GUIs
+react - button
 
 ### Java event model - delegation model
 - Source
-	- an object that generates an event
+	- an object that **generates an event**
 	- must register listeners 
 
 - Listener
-	- an object that is notified of an event occurring 
-	- must (1) have registered (2) have methods to deal with these notifications
+	- an object that is **notified** of an event **occurring**  
+	- must
+		- (1) have registered
+		- (2) have methods to deal with these notifications
 
 - Event
-	- an object that contains information about a state change in a source.
+	- an object that contains **information** about a **state change** in a source.
 
 ```java
 public class Beeper extends JPanel implements ActionListener {

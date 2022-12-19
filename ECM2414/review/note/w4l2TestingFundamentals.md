@@ -10,8 +10,9 @@
 	- Unit testing
 	- Integration testing
 	- System testing
-	- User acceptance testing
+	- User acceptance testing(UAT)
 - Advantages/disadvantages of the V model
+![avatar](https://github.com/kechenkristin/imagesGitHub/blob/main/notes/uni/ecm2414/Vmodel.png)
 
 ### Testing categories
 - Static testing
@@ -19,11 +20,12 @@ assessing documents(review, walkthroughs, ...)
 - Dynamic testing
 	- White box testing
 		- internals are know
+		- bias
 		- tests can be designed to test many paths through the program
 		- test explicit paths through the system(code coverage)
-		- bias
 	- Black box testing
 		- internal are not know
+		- no bias
 		- treats code as a "black box"
 		- functionality
 		- High probability that tests will only test a small number of paths through the program
