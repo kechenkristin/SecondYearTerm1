@@ -3,10 +3,6 @@
 - features
 Attaches **additional** behavioural responsibilities to an object dynamically. Decorators provide a flexible alternative to **subclassing** for **extending** functionality.
 
-- principles
-	- open to for **extension**, but closed for modification
-	- easy to extend to incorporate new behaviour, but without modify the existing code base
-
 - example
 	- First design 
 	- Second design 
@@ -20,7 +16,7 @@ Attaches **additional** behavioural responsibilities to an object dynamically. D
 	- decorators have the **same supertype** as the objects they decorate
 		- we can pass around a decorate object in place of the original object
 	- Object can be decorated at any time, so we can perform **dynamic runtime decoration**
-	- Behaviour comes through the **composition** of decorators with the base components (and other decorators)
+	- Behaviour comes through the **composition** of decorators with the base components 
 	- Some liminations
 		- takes time and effort
 		- introduces new levels of abstraction
@@ -64,3 +60,28 @@ encapsulates a request as an object
 - Favor **ojbect composition** over class inheritance
 - Open-close principle, Class should be **open for extension** but close for modification
 - Dependency inversion principle, Depend upon **abstrations**, don't depend on concrete classes
+
+## Exercise
+### Decorator Pattern Facts
+1. Choose the correct statement(s) on the decorator design patter from the below. Select one or more:  
+a. Decorators have the same supertype as the objects they decorate, so we can pass around a decorated object in place of the original object.  
+b. The dynamic behaviour comes through the composition of decorators with the base components (and other decorators).  
+c. You can use one or more decorators to wrap an object.  
+d. Objects can be decorated at any time, so we can perform dynamic runtime decoration.  
+a, b, c, d  
+
+### When to use Decorator Pattern
+When should a decorator pattern be used? Select one or more:  
+a. The decorator pattern should not be used throughout the design but in areas that are most likely to change.  
+b. When adding functionality to an individual object not to all objects at run-time.  
+c. The decorator design pattern can substitute factory design pattern at any time.  
+d. When subclassing becomes impractical and a large number of different possibilities is needed to make independent object or a number of combination for an object is required.  
+a, b, d  
+
+### Command Pattern
+Choose the correct statement(s) on the command pattern from the below. Select one or more:  
+a. The Client sets up the binding between a receiver and a ConcreteCommand.  
+b. The command pattern encapsulates a request as an object, thereby letting you parameterise other objects with different requests, queue or log requests, and support undoable operations.  
+c. The command pattern aims to let a command object encapsulate a request by binding together a set of actions on a specific receiver.  
+d. The command pattern encapsulates method invocation.  
+a, b, c, d
