@@ -6,9 +6,9 @@ https://vle.exeter.ac.uk/pluginfile.php/2893365/mod_label/intro/2022_ECM2419_L03
 - Internal level
 
 ### Data abstraction & Data independence
-- Data abstraction
+- Data abstraction(向下)
 Hide storage details and present the users with a conceptual view of the database.
-- Data independence
+- Data independence(向上)
 The capacity that upper levels are unaffected by changes to lower level.
 
 ### DB Schema & DB State
