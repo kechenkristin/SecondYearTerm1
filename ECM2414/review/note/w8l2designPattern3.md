@@ -1,5 +1,5 @@
 ## Note
-### Decorator Pattern
+### Decorator Pattern(Structural Pattern)
 - features
 Attaches **additional** behavioural responsibilities to an object dynamically. Decorators provide a flexible alternative to **subclassing** for **extending** functionality.
 
@@ -21,7 +21,7 @@ Attaches **additional** behavioural responsibilities to an object dynamically. D
 		- takes time and effort
 		- introduces new levels of abstraction
 
-### The Command Pattern
+### The Command Pattern(Behavioral Pattern)
 ![avatar](https://github.com/kechenkristin/imagesGitHub/blob/main/notes/uni/ecm2414/commandPattern.png)
 - features
 	- **encapsulate** a request as an object
@@ -56,6 +56,7 @@ encapsulates a request as an object
 
 ### OOD Principles
 - **Encapsulate** what varies
+- Identify the aspects of your application that vary and separate them from what stays the same**(separate vary and same)**
 - Program to an **interface**, not an implementation
 - Favor **ojbect composition** over class inheritance
 - Open-close principle, Class should be **open for extension** but close for modification

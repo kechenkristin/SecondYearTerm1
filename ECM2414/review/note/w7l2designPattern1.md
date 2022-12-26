@@ -3,10 +3,13 @@
 - provide an architecture and general reusable solution
 
 - OO Design Principles
-	- Depend upon abstractions, not depend upon concrete classes
-	- Identify the aspects of your application that vary and separate them from what stays the same
+	- **Encapsulate** what varies
+	- Identify the aspects of your application that vary and separate them from what stays the same**(separate vary and same)**
 	- Program to an **interface**, not an implementation
-	- **object composition** rather than inheritance
+	- Favor **ojbect composition** over class inheritance
+	- Open-close principle, Class should be **open for extension** but close for modification
+	- Dependency inversion principle, Depend upon **abstrations**, don't depend on concrete classes
+
 
 - types of design patterns
 	- Creational Patterns(object creation)
