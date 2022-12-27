@@ -56,9 +56,9 @@ encapsulates a request as an object
 
 ### OOD Principles
 - **Encapsulate** what varies
-- Identify the aspects of your application that vary and separate them from what stays the same**(separate vary and same)**
+- Identify the aspects of your application that vary and separate them from what stays the same (**separate vary and same**)
 - Program to an **interface**, not an implementation
-- Favor **ojbect composition** over class inheritance
+- Favor object **composition** over class inheritance
 - Open-close principle, Class should be **open for extension** but close for modification
 - Dependency inversion principle, Depend upon **abstrations**, don't depend on concrete classes
 

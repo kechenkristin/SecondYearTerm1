@@ -62,10 +62,10 @@ To legally compile, the genericMethod argument must be a Number or a subtype of 
 	- Container<Double> and Container<Integer> **are not** subtypes of Container<Number>
 	- Container<Double> and Container<Integer> **are** subtypes of Container<? extends Number>
 
-- Type erasure
+- Type erasure  
 To ensure backwards compatibility, the complier removes all type information from parameters and arguments within generic classes/methods during the compilation.
 
-- Heap pollution
+- Heap pollution  
 a variable of a declared parameterised type refers to an instance that is not of that parameterised type
 
 ## Exercise
