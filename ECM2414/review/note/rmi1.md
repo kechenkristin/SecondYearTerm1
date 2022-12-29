@@ -37,7 +37,7 @@
 ## Exercise
 ### RMI
 1. Choose the correct statement(s) on Java RMI from the below. Select one or more:  
-a. It provides the mechanism by which the server and the client communicate and pass information back and forth. 
+a. It provides the mechanism by which the server and the client communicate and pass information back and forth.   
 b. It has a typical server application creating a number of remote objects, making references to those remote objects accessible, and waiting for clients to invoke methods on those remote objects.   
 c. It has a typical client application getting a remote reference to one or more remote objects in the server and then invoking methods on them.   
 d. It can download the method from the server to the client to run.  
