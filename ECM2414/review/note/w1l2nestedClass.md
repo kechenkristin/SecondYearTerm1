@@ -1,4 +1,4 @@
-![avatar](https://github.com/kechenkristin/imagesGitHub/blob/main/notes/uni/accessControl.png)
+![avatar](https://github.com/kechenkristin/imagesGitHub/blob/main/notes/uni/ecm2414/accessControl.png)
 
 ## Nested classes
 
@@ -20,7 +20,7 @@ class Car {
 }
 ```
 - does **not** have access to **instance** members
-- Accessed using enclosing **class** name
+- Accessed using **enclosing class** name
 ```java
 Car.Gearbox
 ```
@@ -40,8 +40,8 @@ class Car {
 	}
 }
 ```
-- does **have** access to **instance** members
-- Inner classes can be directly accessed by the enclosing **instance**
+- **have** access to **instance** members
+- accessed by the enclosing **instance**
 - construct
 	- from inside class
 ```java
@@ -100,7 +100,12 @@ HelloWorld frenchGreeting = new HelloWorld() {
 - new keyword
 - The name of an interface to implement or a class to extend. In this example, the anonymous class is implementing the interface HelloWorld.
 
-## Enumerated classes
+### Enumerated classes
+
+### Why nested class?
+- Class that are closely linked can be located in one place
+- increase encapsulation
+- make code more readable
 
 ## Exercise
 ### inner class and static class

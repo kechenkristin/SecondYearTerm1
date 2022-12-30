@@ -16,14 +16,14 @@
 
 ### cf distributed and non-distributed models
 - similarities
-	- A reference to a remote object can be **passed as an argument** or **returned as a result** in any method invocation
+	- Remote object can be **passed as an argument** or **returned as a result** in any method invocation by **reference**
 	- remote object cast remote interface
 	- The built-in **instanceof** operator can be used to test the remote interfaces supported by a remote object
 
 - dissimilarities
 	- Clients interact with **remote interface** rather than **class implementations**
-	- Non-remote arguments to, and results from, passed by **copy** rather than by reference
-	- A **remote object** is passed by **reference**, not by copying the actual remote implementation. 
+	- Non-remote arguments to, and results from, passed by **copy**  
+	cf A **remote object** is passed by **reference**, not by copying the actual remote implementation. 
 	- Client handle **exception**(java.rmi.RemoteException)
 
 ## exercise
