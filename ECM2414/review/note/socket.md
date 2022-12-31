@@ -1,5 +1,6 @@
 ## note
 ### The Internet(Overview)
+![avatar](https://github.com/kechenkristin/imagesGitHub/blob/main/notes/uni/ecm2414/internet.png)
 
 ### Transmission Control Protocol(TCP)
 - analogous with a **telephone conversation**
