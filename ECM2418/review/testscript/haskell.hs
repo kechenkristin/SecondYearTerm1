@@ -12,10 +12,39 @@ add1 (x, y) = x + y
 add2 :: Int -> (Int -> Int)
 add2 x y = x + y
 
--- ch4
-pyths :: Int -> [(Int, Int, Int)]
-pyths z = [(x, y, z) | x, y, z <- x^2 + y^2 = z^2]
+-- lab1
+myLen :: [a] -> Int
+myLen [] = 0
+myLen (_: xs) = 1 + myLen xs
 
+myContains :: Eq a => [a] -> a -> Bool
+myContains [] y = False
+myContains (x : xs) y 
+ | x == y = True
+ | otherwise = myContains xs y
 
-perfects :: Int -> [Int]
-perfects n = 
+-- look
+mySet :: Eq a => [a] -> Bool
+mySet [] = False
+mySet (x : xs) 
+ | myContains xs x = False 
+ | otherwise = mySet xs
+
+-- look
+myLargest :: Ord a => [a] -> a 
+myLargest [x] = x
+mylargest (x : xs) = max x (myLargest xs)
+
+myZip :: [a] -> [b] -> [(a, b)]
+myZip _ [] = []
+myZip [] _ = []
+myZip (x : xs) (y : ys) = (x, y) : myZip xs ys
+
+myInsert :: Ord a => a -> [a] -> [a]
+myInsert y (x : xs)
+ | y < x = y : x : xs
+ | otherwise = x : myInsert y xs
+
+iSort :: Ord a => [a] -> [a]
+iSort [] = []
+iSort (x : xs) = myInsert x (iSort xs)
