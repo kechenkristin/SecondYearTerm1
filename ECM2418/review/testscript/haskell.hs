@@ -48,3 +48,60 @@ myInsert y (x : xs)
 iSort :: Ord a => [a] -> [a]
 iSort [] = []
 iSort (x : xs) = myInsert x (iSort xs)
+
+-- lab2
+memberSet :: Eq a => a -> [a] -> Bool
+memberSet _ [] = False
+memberSet y (x : xs) 
+ | y == x = True
+ | otherwise = memberSet y xs
+
+unionSet :: Eq a => [a] -> [a] -> [a]
+unionSet [] ys = ys
+unionSet xs [] = xs
+unionSet (x : xs) ys 
+ | memberSet x ys = unionSet xs ys
+ | otherwise = x : unionSet xs ys
+
+intersectSet :: Eq a => [a] -> [a] -> [a]
+intersectSet [] _ = []
+intersectSet _ [] = []
+intersectSet (x : xs) ys 
+ | memberSet x ys = x : intersectSet xs ys
+ | otherwise = intersectSet xs ys
+
+takeList :: Int -> [a] -> [a]
+takeList 0 xs = []
+takeList _ [] = []
+takeList n (x : xs) = x : takeList (n - 1) xs
+
+dropList :: Int -> [a] -> [a]
+dropList 0 xs = xs
+dropList _ [] = []
+dropList n (x : xs) = dropList (n - 1) xs
+
+-- look
+splitList :: Int -> [a] -> ([a], [a])
+splitList n xs = ((takeList n xs), (dropList n xs))
+
+
+-- appList
+appList :: [a] -> [a] -> [a]
+appList [] xs = xs
+appList (x : xs) ys = x : appList xs ys
+
+-- look
+-- appList xs ys = foldr (:) ys xs 
+
+-- look
+concatList :: [[a]] -> [a]
+concatList [] = []
+concatList (x : xs) = x ++ concatList xs
+
+concatList1 :: [[a]] -> [a]
+concatList1 xss = [x | xs <- xss, x <- xs]
+
+concatList2 :: [[a]] -> [a]
+concatList2 xs = foldr (++) [] 
+
+-- look
