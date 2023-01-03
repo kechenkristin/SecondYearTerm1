@@ -102,6 +102,14 @@ concatList1 :: [[a]] -> [a]
 concatList1 xss = [x | xs <- xss, x <- xs]
 
 concatList2 :: [[a]] -> [a]
-concatList2 xs = foldr (++) [] 
+concatList2 = foldr (++) [] 
 
 -- look
+triangle :: Int -> Int
+triangle x = x * (x + 1) `div` 2
+
+triangles :: [Int] -> [Int]
+triangles xs = map triangle xs
+
+triangles2 :: [Int] -> [Int]
+triangles2 xs = [ x * (x + 1) `div` 2 | x <- xs]
