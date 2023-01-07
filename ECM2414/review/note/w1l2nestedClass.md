@@ -100,7 +100,14 @@ HelloWorld frenchGreeting = new HelloWorld() {
 - new keyword
 - The name of an interface to implement or a class to extend. In this example, the anonymous class is implementing the interface HelloWorld.
 
-### Enumerated classes
+### Enumerated classes(pq11)
+- Are not instantiated
+```java
+Day d = Day.TUESDAY;
+```
+- Effectively **static** and **final**
+- **can** declear an enum as **a separate class**, or as a **class member**
+- **not internally within a method**
 
 ### Why nested class?
 - Class that are closely linked can be located in one place

@@ -29,9 +29,9 @@
 
 ### Singleton Pattern
 #### How to create a Singleton Pattern
-- Static member
-	- a private static variable
-	- the only instance of Singleton class
+- Static member(pq4)
+	- a **private static variable**
+	- the **only instance** of Singleton class
 - Private constructor
 	- a private constructor
 	- make sure an outer class can NOT instantiate obj 
