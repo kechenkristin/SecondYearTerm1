@@ -1,5 +1,21 @@
 ## Note
 See more details in slides
+### Popular version control tools(pq 49)
+- Git
+- Mercurial
+- Concurrent Version SYstem(CVS)
+- Subversion(svn)
+
+### copies vs versions(pq 29)
+- file specific numbering (from 1.1)
+- repository specific (from 0)
+
+### Locking(pq 35)
+- Strict locking
+	- only one person can change a file at any one time
+- Optimistic locking
+	- All files can be changed, but if changed in the repository since last
+check out then local copy needs to be updated before you can commit the change.
 
 ## Exercise
 1. Choose the correct statement of version control from the below. Select one or more:  

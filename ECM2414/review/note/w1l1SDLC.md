@@ -1,5 +1,5 @@
 ## Note
-### 1.broad categories
+### 1.broad categories(sdlc) (pq40)
 - requirement analysis
 - design
 - implementation
@@ -27,8 +27,16 @@
 
 - agile development
 	- same as 1
+	- software development practice based on short interative **sprints**
+		- Requirements
+		- Design analysis
+		- Inplementation & developer testing
+		- QA & acceptance testing
+		- Evaluation and prioritisation
 
-- scrum
+- scrum(pq39)
+	- tipical example of agile
+	- It aims to produce deployable software in each **sprint**
 	- based on short fixed-length sprints (beginning meeting)
 	- typical 2-4 weeks long
 	- daily scrum meeting 

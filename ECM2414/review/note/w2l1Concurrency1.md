@@ -28,6 +28,11 @@ why have this issue?
 
 #### Liveness
 - code performs **correctly in time**
+- issues(pq 30)
+	- race condition
+	- deadlock
+	- livelock
+	- starvation
 
 #### Race conditions	
 - two threads try to access/change data at the same time
@@ -51,7 +56,7 @@ public void doSomeSynchronisedStuff() {
 }
 ```
 
-#### Atomic actions
+#### Atomic actions(pq 9)
 - can not be stopped in the middle
 
 ## Exercise

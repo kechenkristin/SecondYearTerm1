@@ -39,11 +39,13 @@ assessing documents(review, walkthroughs, ...)
 		- know both the functionality and implementation
 
 ### Code coverage
-- Coverage types
+- Coverage types(pq27)
 	- Function/method/(sub)routine coverage
 		- method
+		- includes constructor
+		- externally not accessible methods
 	- State coverage
-		- each line of code has been processed 
+		- **each line** of code has been processed 
 	- Decision coverage
 		- decision
 		- if/else
@@ -54,7 +56,27 @@ an open source code coverage tool
 
 ### Corner cases
 related to **edge cases**
-### Limits of testing
+
+### Limits of testing(pq pq48)
+- not possible to test every single aspect 
+	- large input
+	- too mant possible path
+- cannot assert functions correctly in all conditions(but functions **incorrectly** under specific conditions
+
+### Extra(pq 46 46)
+#### V-Model different levels of testing
+- Unit testng
+- Intergration testing
+- System testing
+- User acceptance testing
+
+#### testing categories
+- Static testing(documents)
+- Dynamic testing
+	- White box
+	- Black box
+	- Grey box
+
 
 ## Exercise
 ### V-Model

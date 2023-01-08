@@ -14,8 +14,9 @@ react - button
 	- an object that **generates an event**
 	- must register listeners 
 
-- Listener
+- Listener(pq 36)
 	- an object that is **notified** of an event **occurring**  
+	- implementing a listener interface
 	- must
 		- (1) have registered
 		- (2) have methods to deal with these notifications

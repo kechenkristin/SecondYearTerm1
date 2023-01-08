@@ -69,6 +69,8 @@ public synchronized notifyBob() {
 
 - yield()
 	- current thread pause, other thread execute
+	- running ==> runnable
+	- stops a thread for unpredictable time
 - join()
 	- wait for the thread which calls join() method
 	- 哪个线程调用join()就等待哪个线程
@@ -78,6 +80,20 @@ t.join()
 wait for t thread finishes  
 - explicit locking
 
+### Extra notes
+- notify() & notifyAll() (pq21)
+- yield() & sleep() (pq22)
+	- sleep 
+		- 调用 sleep 会让当前线程从 Running进入 Timed Waiting 状态（阻塞） 
+		- 其它线程可以使用 interrupt 方法打断正在睡眠的线程，这时 sleep 方法会抛出 InterruptedException 
+		- 睡眠结束后的线程未必会立刻得到执行 
+		- 建议用 TimeUnit 的 sleep 代替 Thread 的 sleep 来获得更好的可读性 
+	- yield 
+		- 调用 yield 会让当前线程从 Running 进入 Runnable就绪状态，然后调度执行其它线程 
+		- 具体的实现依赖于操作系统的任务调度器 
+- run() & start() (pq23)
+	- 直接调用 run 是在主线程中执行了 run，没有启动新的线程 
+	- 使用 start 是启动新的线程，通过新的线程间接执行 run 中的代码
 
 
 ## exercise

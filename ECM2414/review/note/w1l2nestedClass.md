@@ -114,6 +114,15 @@ Day d = Day.TUESDAY;
 - increase encapsulation
 - make code more readable
 
+### ps. modifiers
+- outer class
+	- two public & default
+- inner class
+	- all the standard 
+- local class
+	- cannot contain public, protected, private, static
+	- only default
+
 ## Exercise
 ### inner class and static class
 1. Why do we usually say "inner classes are more useful than static nested classes"?
