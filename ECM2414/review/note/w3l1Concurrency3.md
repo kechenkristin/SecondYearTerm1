@@ -20,6 +20,10 @@ JMM 体现在以下几个方面
 - tells compiler not to optimise 
 - force the next read to see the last write
 
+### immutable primitive
+- An immutable primitive is thread safe
+- The primitive value cannot change
+
 ### Publishing & Escape
 #### Publishing
 - make an object available outside its current scope
@@ -35,7 +39,7 @@ class UnsafeStates {
 }
 ```
 
-### Thread confinement(监禁)
+### Thread confinement(监禁) (mp 8)
 - an element of the program's design
 - ensure thread-safety
 - If the data doesn't need to be shared, confine it to a single thread

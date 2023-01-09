@@ -1,12 +1,13 @@
 ## Note
 ### Mock objects
-- use mock objects when the real object
+- use mock objects when the real object(mq 3)
 	- has non-deterministic behaviour
 	- is difficult to set up
 	- has behaviour that is hard to trigger(eg. network error)
 	- is slow
 	- has(or is) a user interface
 	- does not yet exist
+	- not consistent
 
 ### Test suites
 - allow us to group multiple test classes to run as a single batch
