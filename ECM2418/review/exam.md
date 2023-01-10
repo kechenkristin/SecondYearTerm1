@@ -20,6 +20,6 @@ https://www.gatevidyalay.com/dfa-to-regular-expression-examples-automata/
 note
 
 #### Construct NFA graph with RE
-![avatar](https://github.com/kechenkristin/imagesGitHub/blob/main/notes/uni/Eliminate.png)
-![avatar](https://github.com/kechenkristin/imagesGitHub/blob/main/notes/uni/erToNFA1.png)
-![avatar](https://github.com/kechenkristin/imagesGitHub/blob/main/notes/uni/reToNFA2.png)
+![avatar](https://github.com/kechenkristin/imagesGitHub/blob/main/notes/uni/ecm2418/Eliminate.png)
+![avatar](https://github.com/kechenkristin/imagesGitHub/blob/main/notes/uni/ecm2418/erToNFA1.png)
+![avatar](https://github.com/kechenkristin/imagesGitHub/blob/main/notes/uni/ecm2418/reToNFA2.png)
